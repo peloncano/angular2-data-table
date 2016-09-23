@@ -23,5 +23,6 @@ export declare class TableColumn {
     prop: string;
     template: any;
     headerTemplate: any;
+    classes: string;
     constructor(props?: any);
 }

@@ -223,9 +223,9 @@ var DataTable = (function () {
     ], DataTable.prototype, "isSelectable", null);
     DataTable = __decorate([
         core_1.Component({
-            selector: 'datatable',
+            selector: 'table[datatable]',
             providers: [State_1.StateService],
-            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
+            template: "\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n  "
         }),
         __param(0, core_1.Host()), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])

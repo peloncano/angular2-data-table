@@ -351,6 +351,8 @@ var TableColumn = (function () {
         this.draggable = true;
         // Whether the column can automatically resize to fill space in the table.
         this.canAutoResize = true;
+        // Classes to apply to the column
+        this.classes = '';
         Object.assign(this, props);
         if (!this.prop && this.name) {
             this.prop = camelCase(this.name);
@@ -845,9 +847,9 @@ var DataTable = (function () {
     ], DataTable.prototype, "isSelectable", null);
     DataTable = __decorate([
         _angular_core.Component({
-            selector: 'datatable',
+            selector: 'table[datatable]',
             providers: [StateService],
-            template: "\n    <div\n      visibility-observer\n      (onVisibilityChange)=\"adjustSizes()\">\n      <datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </datatable-header>\n      <datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </datatable-body>\n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </div>\n  "
+            template: "\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n  "
         }),
         __param(0, _angular_core.Host()), 
         __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _j) || Object, (typeof (_k = typeof _angular_core.KeyValueDiffers !== 'undefined' && _angular_core.KeyValueDiffers) === 'function' && _k) || Object])
@@ -976,8 +978,8 @@ var DataTableHeader = (function () {
     ], DataTableHeader.prototype, "onColumnChange", void 0);
     DataTableHeader = __decorate([
         _angular_core.Component({
-            selector: 'datatable-header',
-            template: "\n    <div\n      [style.width]=\"state.columnGroupWidths.total + 'px'\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n      <div\n        class=\"datatable-row-left\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        *ngIf=\"state.columnsByPin.left.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-center\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n      <div\n        class=\"datatable-row-right\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        *ngIf=\"state.columnsByPin.right.length\">\n        <datatable-header-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          resizeable\n          [resizeEnabled]=\"column.resizeable\"\n          (onResize)=\"columnResized($event, column)\"\n          long-press\n          (onLongPress)=\"drag = true\"\n          (onLongPressEnd)=\"drag = false\"\n          draggable\n          [dragX]=\"column.draggable && drag\"\n          [dragY]=\"false\"\n          [model]=\"column\"\n          (onColumnChange)=\"onColumnChange.emit($event)\">\n        </datatable-header-cell>\n      </div>\n    </div>\n  ",
+            selector: 'thead[datatable-header]',
+            template: "\n    <tr\n      [style.width]=\"state.columnGroupWidths.total + 'px'\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n\n      <th datatable-header-cell\n        *ngFor=\"let column of state.columnsByPin.center\"\n\n        long-press\n        (onLongPress)=\"drag = true\"\n        (onLongPressEnd)=\"drag = false\"\n        draggable\n        [dragX]=\"column.draggable && drag\"\n        [dragY]=\"false\"\n        [model]=\"column\"\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </th>\n    </tr>\n  ",
             host: {
                 '[style.width]': 'headerWidth',
                 '[style.height]': 'headerHeight'
@@ -1323,8 +1325,8 @@ var DataTableBody = (function () {
     ], DataTableBody.prototype, "bodyWidth", null);
     DataTableBody = __decorate([
         _angular_core.Component({
-            selector: 'datatable-body',
-            template: "\n    <div>\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n      <div\n        scroller\n        (onScroll)=\"onBodyScroll($event)\"\n        *ngIf=\"state.rows.length\"\n        [rowHeight]=\"state.options.rowHeight\"\n        [scrollbarV]=\"state.options.scrollbarV\"\n        [scrollbarH]=\"state.options.scrollbarH\"\n        [count]=\"state.rowCount\"\n        [scrollWidth]=\"state.columnGroupWidths.total\">\n        <datatable-body-row\n          [ngStyle]=\"getRowsStyles(row)\"\n          [style.height]=\"state.options.rowHeight + 'px'\"\n          *ngFor=\"let row of rows; let i = index;\"\n          [attr.tabindex]=\"i\"\n          (click)=\"rowClicked($event, i, row)\"\n          (keydown)=\"rowKeydown($event, i, row)\"\n          [row]=\"row\"\n          [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n          [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n        </datatable-body-row>\n      </div>\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n    </div>\n  "
+            selector: 'tbody[datatable-body]',
+            template: "\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n\n      <tr datatable-body-row\n        [ngStyle]=\"getRowsStyles(row)\"\n        [style.height]=\"state.options.rowHeight + 'px'\"\n        *ngFor=\"let row of rows; let i = index;\"\n        [attr.tabindex]=\"i\"\n        (click)=\"rowClicked($event, i, row)\"\n        (keydown)=\"rowKeydown($event, i, row)\"\n        [row]=\"row\"\n        [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n        [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n      </tr>\n\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_d = typeof StateService !== 'undefined' && StateService) === 'function' && _d) || Object, (typeof (_e = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _e) || Object])
     ], DataTableBody);
@@ -1420,9 +1422,10 @@ var DataTableHeaderCell = (function () {
     ], DataTableHeaderCell.prototype, "onColumnChange", void 0);
     DataTableHeaderCell = __decorate([
         _angular_core.Component({
-            selector: 'datatable-header-cell',
+            selector: 'th[datatable-header-cell]',
             template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [sort]=\"sort\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
+                '[className]': 'model.classes',
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
                 '[style.width]': 'model.width + "px"',
@@ -1559,6 +1562,7 @@ var DataTableBodyRow = (function () {
         configurable: true
     });
     DataTableBodyRow.prototype.stylesByGroup = function (group) {
+        console.log('BODYROW stylesByGroup()');
         var widths = this.state.columnGroupWidths;
         var offsetX = this.state.offsetX;
         var styles = {
@@ -1585,8 +1589,8 @@ var DataTableBodyRow = (function () {
     ], DataTableBodyRow.prototype, "isSelected", null);
     DataTableBodyRow = __decorate([
         _angular_core.Component({
-            selector: 'datatable-body-row',
-            template: "\n    <div>\n      <div\n        class=\"datatable-row-left datatable-row-group\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center datatable-row-group\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right datatable-row-group\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
+            selector: 'tr[datatable-body-row]',
+            template: "\n        <td datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\"\n          [className]=\"column.classes\">\n        </td>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof StateService !== 'undefined' && StateService) === 'function' && _a) || Object, (typeof (_b = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _b) || Object])
     ], DataTableBodyRow);
@@ -1662,7 +1666,7 @@ var DataTableBodyCell = (function () {
     ], DataTableBodyCell.prototype, "width", null);
     DataTableBodyCell = __decorate([
         _angular_core.Component({
-            selector: 'datatable-body-cell',
+            selector: 'td[datatable-body-cell]',
             template: "\n    <div class=\"datatable-body-cell-label\">\n      <span\n        *ngIf=\"!column.template\"\n        [innerHTML]=\"value\">\n      </span>\n      <template\n        *ngIf=\"column.template\"\n        [value]=\"value\"\n        [row]=\"row\"\n        [column]=\"column\"\n        [templateWrapper]=\"column.template\">\n      </template>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_b = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _b) || Object])

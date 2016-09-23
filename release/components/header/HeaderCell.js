@@ -65,9 +65,10 @@ var DataTableHeaderCell = (function () {
     ], DataTableHeaderCell.prototype, "onColumnChange", void 0);
     DataTableHeaderCell = __decorate([
         core_1.Component({
-            selector: 'datatable-header-cell',
+            selector: 'th[datatable-header-cell]',
             template: "\n    <div>\n      <span\n        class=\"datatable-header-cell-label draggable\"\n        *ngIf=\"!model.headerTemplate\"\n        (click)=\"onSort()\"\n        [innerHTML]=\"name\">\n      </span>\n      <template\n        *ngIf=\"model.headerTemplate\"\n        [column]=\"model\"\n        [sort]=\"sort\"\n        [templateWrapper]=\"model.headerTemplate\">\n      </template>\n      <span\n        class=\"sort-btn\"\n        [ngClass]=\"sortClasses()\">\n      </span>\n    </div>\n  ",
             host: {
+                '[className]': 'model.classes',
                 '[class.sortable]': 'model.sortable',
                 '[class.resizable]': 'model.resizable',
                 '[style.width]': 'model.width + "px"',

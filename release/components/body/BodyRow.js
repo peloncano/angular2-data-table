@@ -25,6 +25,7 @@ var DataTableBodyRow = (function () {
         configurable: true
     });
     DataTableBodyRow.prototype.stylesByGroup = function (group) {
+        console.log('BODYROW stylesByGroup()');
         var widths = this.state.columnGroupWidths;
         var offsetX = this.state.offsetX;
         var styles = {
@@ -51,8 +52,8 @@ var DataTableBodyRow = (function () {
     ], DataTableBodyRow.prototype, "isSelected", null);
     DataTableBodyRow = __decorate([
         core_1.Component({
-            selector: 'datatable-body-row',
-            template: "\n    <div>\n      <div\n        class=\"datatable-row-left datatable-row-group\"\n        *ngIf=\"state.columnsByPin.left.length\"\n        [ngStyle]=\"stylesByGroup('left')\"\n        [style.width]=\"state.columnGroupWidths.left + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.left\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-center datatable-row-group\"\n        [style.width]=\"state.columnGroupWidths.center + 'px'\"\n        [ngStyle]=\"stylesByGroup('center')\"\n        *ngIf=\"state.columnsByPin.center.length\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n      <div\n        class=\"datatable-row-right datatable-row-group\"\n        *ngIf=\"state.columnsByPin.right.length\"\n        [ngStyle]=\"stylesByGroup('right')\"\n        [style.width]=\"state.columnGroupWidths.right + 'px'\">\n        <datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.right\"\n          [row]=\"row\"\n          [column]=\"column\">\n        </datatable-body-cell>\n      </div>\n    </div>\n  "
+            selector: 'tr[datatable-body-row]',
+            template: "\n        <td datatable-body-cell\n          *ngFor=\"let column of state.columnsByPin.center\"\n          [row]=\"row\"\n          [column]=\"column\"\n          [className]=\"column.classes\">\n        </td>\n  "
         }), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])
     ], DataTableBodyRow);
