@@ -1,12 +1,13 @@
-# angular2-data-table  [![Join the chat at https://gitter.im/swimlane/angular2-data-table](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/swimlane/angular2-data-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Code Climate](https://codeclimate.com/github/swimlane/angular2-data-table/badges/gpa.svg)](https://codeclimate.com/github/swimlane/angular2-data-table) [![Test Coverage](https://codeclimate.com/github/swimlane/angular2-data-table/badges/coverage.svg)](https://codeclimate.com/github/swimlane/angular2-data-table/coverage) [![Dependency Status](https://david-dm.org/swimlane/angular2-data-table.svg)](https://david-dm.org/swimlane/angular2-data-table) [![devDependency Status](https://david-dm.org/swimlane/angular2-data-table/dev-status.svg)](https://david-dm.org/swimlane/angular2-data-table#info=devDependencies) [![npm version](https://badge.fury.io/js/angular2-data-table.svg)](http://badge.fury.io/js/angular2-data-table) [![npm downloads](https://img.shields.io/npm/dm/angular2-data-table.svg)](https://npmjs.org/angular2-data-table)
-
-
 # Notes
 The components' selectors and HTML on this project have been changed to use the HTML tags corresponding to a normal table (thead, tbody, th, tr, tds).
 
 Some features have been disabled as well (auto resizing)
 
 # ORIGINAL README
+
+
+# angular2-data-table  [![Join the chat at https://gitter.im/swimlane/angular2-data-table](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/swimlane/angular2-data-table?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Code Climate](https://codeclimate.com/github/swimlane/angular2-data-table/badges/gpa.svg)](https://codeclimate.com/github/swimlane/angular2-data-table) [![Test Coverage](https://codeclimate.com/github/swimlane/angular2-data-table/badges/coverage.svg)](https://codeclimate.com/github/swimlane/angular2-data-table/coverage) [![Dependency Status](https://david-dm.org/swimlane/angular2-data-table.svg)](https://david-dm.org/swimlane/angular2-data-table) [![devDependency Status](https://david-dm.org/swimlane/angular2-data-table/dev-status.svg)](https://david-dm.org/swimlane/angular2-data-table#info=devDependencies) [![npm version](https://badge.fury.io/js/angular2-data-table.svg)](http://badge.fury.io/js/angular2-data-table) [![npm downloads](https://img.shields.io/npm/dm/angular2-data-table.svg)](https://npmjs.org/angular2-data-table)
+
 `angular2-data-table` is a Angular2 component for presenting large and complex data.  It has all the features you would expect from any other table but in a light package with _no external dependencies_. The table was designed to be extremely flexible and light; it doesn't make any assumptions about your data or how you: filter, sort or page it.
 
 It was built for modern browsers using _TypeScript, CSS3 and HTML5_ and Angular `~2.0.0`. This is the sister project of the [angular-data-table](https://github.com/swimlane/angular-data-table) that is designed for Angular 1.x.
