@@ -12,11 +12,11 @@ import '../themes/material.scss';
   template: `
     <div>
       <h3>basic</h3>
-      <datatable
-        class='material striped'
+      <table datatable
+        class=''
         [rows]='rows'
         [options]='options'>
-      </datatable>
+      </table>
     </div>
   `
 })
@@ -25,12 +25,13 @@ export class App {
   rows = [];
 
   options = new TableOptions({
-    columnMode: ColumnMode.force,
+    // columnMode: ColumnMode.force,
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 'auto',
+    limit: 25,
     columns: [
-      new TableColumn({ prop: 'name' }),
+      new TableColumn({ prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Gender' }),
       new TableColumn({ name: 'Company' })
     ]

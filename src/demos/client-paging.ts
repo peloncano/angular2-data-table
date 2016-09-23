@@ -12,11 +12,11 @@ import '../themes/material.scss';
   template: `
     <div>
       <h3>client-paging</h3>
-      <datatable
+      <table datatable
         class="material"
         [rows]="rows"
         [options]="options">
-      </datatable>
+      </table>
     </div>
   `
 })

@@ -76,6 +76,9 @@ export class TableColumn {
   // ng2 template ref
   headerTemplate: any;
 
+  // Classes to apply to the column
+  classes: string = '';
+
   constructor(props?: any) {
     Object.assign(this, props);
 

@@ -3,7 +3,7 @@ import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 
 @Component({
-  selector: 'datatable-body-cell',
+  selector: 'td[datatable-body-cell]',
   template: `
     <div class="datatable-body-cell-label">
       <span

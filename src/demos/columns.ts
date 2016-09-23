@@ -13,12 +13,12 @@ import '../themes/material.scss';
     <div>
       <h3>column add/remove</h3>
       <div style='width:60%;display:inline-block;'>
-        <datatable
+        <table datatable
           style='width:100%'
           class='material'
           [rows]='rows'
           [options]='options'>
-          </datatable>
+          </table>
       </div>
       <div style='width:20%;display:inline-block;vertical-align:top;text-align:left;padding:20px;'>
         <div *ngFor='let col of columns'>

@@ -1,4 +1,5 @@
 import { NgModule, ApplicationRef } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
@@ -13,15 +14,17 @@ import '../components/datatable.scss';
 // import { App } from './expressive';
 // import { App } from './template';
 // import { App } from './details';
-import { App } from './virtual';
+// import { App } from './virtual';
 // import { App } from './inline';
 // import { App } from './scrolling';
 // import { App } from './pinning';
 // import { App } from './multiple';
+// import { App } from './columns';
+import { App } from './filter';
 
 @NgModule({
   declarations: [App],
-  imports: [BrowserModule, Angular2DataTableModule],
+  imports: [FormsModule, BrowserModule, Angular2DataTableModule],
   bootstrap: [App]
 })
 export class AppModule {

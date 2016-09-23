@@ -11,7 +11,7 @@ import '../themes/material.scss';
   template: `
     <div>
       <h3>expressive</h3>
-      <datatable
+      <table datatable
         class="material"
         [rows]="rows"
         [options]="options">
@@ -33,7 +33,7 @@ import '../themes/material.scss';
             </div>
           </template>
         </datatable-column>
-      </datatable>
+      </table>
     </div>
   `
 })

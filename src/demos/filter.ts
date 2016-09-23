@@ -19,11 +19,11 @@ import '../themes/material.scss';
         [ngModel]='val'
         (ngModelChange)='updateFilter($event)'
       />
-      <datatable
+      <table datatable
         class='material'
         [rows]='rows'
         [options]='options'>
-        </datatable>
+      </table>
     </div>
   `
 })
@@ -68,6 +68,8 @@ export class App {
   }
 
   updateFilter(val) {
+    console.log("updateFilter", val);
+    
     // remove existing
     this.rows.splice(0, this.rows.length);
 

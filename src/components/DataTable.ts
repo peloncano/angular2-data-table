@@ -24,23 +24,21 @@ import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
 
 @Component({
-  selector: 'datatable',
+  selector: 'table[datatable]',
   providers: [StateService],
   template: `
-    <div
-      visibility-observer
-      (onVisibilityChange)="adjustSizes()">
-      <datatable-header
+      <thead datatable-header
         (onColumnChange)="onColumnChange.emit($event)">
-      </datatable-header>
-      <datatable-body
+      </thead>
+
+      <tbody datatable-body
         (onRowClick)="onRowClick.emit($event)"
         (onRowSelect)="onRowSelect($event)">
-      </datatable-body>
+      </tbody>
+      
       <datatable-footer
         (onPageChange)="state.setPage($event)">
       </datatable-footer>
-    </div>
   `
 })
 export class DataTable implements OnInit, DoCheck, AfterViewInit {

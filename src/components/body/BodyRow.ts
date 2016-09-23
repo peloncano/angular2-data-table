@@ -3,43 +3,14 @@ import { translateXY } from '../../utils/translate';
 import { StateService } from '../../services/State';
 
 @Component({
-  selector: 'datatable-body-row',
+  selector: 'tr[datatable-body-row]',
   template: `
-    <div>
-      <div
-        class="datatable-row-left datatable-row-group"
-        *ngIf="state.columnsByPin.left.length"
-        [ngStyle]="stylesByGroup('left')"
-        [style.width]="state.columnGroupWidths.left + 'px'">
-        <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.left"
-          [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
-      <div
-        class="datatable-row-center datatable-row-group"
-        [style.width]="state.columnGroupWidths.center + 'px'"
-        [ngStyle]="stylesByGroup('center')"
-        *ngIf="state.columnsByPin.center.length">
-        <datatable-body-cell
+        <td datatable-body-cell
           *ngFor="let column of state.columnsByPin.center"
           [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
-      <div
-        class="datatable-row-right datatable-row-group"
-        *ngIf="state.columnsByPin.right.length"
-        [ngStyle]="stylesByGroup('right')"
-        [style.width]="state.columnGroupWidths.right + 'px'">
-        <datatable-body-cell
-          *ngFor="let column of state.columnsByPin.right"
-          [row]="row"
-          [column]="column">
-        </datatable-body-cell>
-      </div>
-    </div>
+          [column]="column"
+          [className]="column.classes">
+        </td>
   `
 })
 export class DataTableBodyRow {
@@ -57,6 +28,7 @@ export class DataTableBodyRow {
   }
 
   stylesByGroup(group) {
+    console.log('BODYROW stylesByGroup()');
     const widths = this.state.columnGroupWidths;
     const offsetX = this.state.offsetX;
 

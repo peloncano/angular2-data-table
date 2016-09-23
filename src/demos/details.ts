@@ -7,7 +7,7 @@ import '../themes/material.scss';
   template: `
     <div>
       <h3>detail template</h3>
-      <datatable
+      <table datatable
         class='material'
         [rows]='rows'
         [options]='options'>
@@ -30,7 +30,7 @@ import '../themes/material.scss';
           </template>
         </datatable-column>
 
-      </datatable>
+      </table>
     </div>
   `
 })

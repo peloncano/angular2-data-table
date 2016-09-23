@@ -11,7 +11,7 @@ import { TableColumn } from '../../models/TableColumn';
 import { SortDirection } from '../../enums/SortDirection';
 
 @Component({
-  selector: 'datatable-header-cell',
+  selector: 'th[datatable-header-cell]',
   template: `
     <div>
       <span
@@ -33,6 +33,7 @@ import { SortDirection } from '../../enums/SortDirection';
     </div>
   `,
   host: {
+    '[className]': 'model.classes',
     '[class.sortable]': 'model.sortable',
     '[class.resizable]': 'model.resizable',
     '[style.width]': 'model.width + "px"',

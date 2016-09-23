@@ -9,71 +9,27 @@ import { StateService } from '../../services/State';
 import { translateXY } from '../../utils/translate';
 
 @Component({
-  selector: 'datatable-header',
+  selector: 'thead[datatable-header]',
   template: `
-    <div
+    <tr
       [style.width]="state.columnGroupWidths.total + 'px'"
       class="datatable-header-inner"
       orderable
       (onReorder)="columnReordered($event)">
-      <div
-        class="datatable-row-left"
-        [ngStyle]="stylesByGroup('left')"
-        *ngIf="state.columnsByPin.left.length">
-        <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.left"
-          resizeable
-          [resizeEnabled]="column.resizeable"
-          (onResize)="columnResized($event, column)"
-          long-press
-          (onLongPress)="drag = true"
-          (onLongPressEnd)="drag = false"
-          draggable
-          [dragX]="column.draggable && drag"
-          [dragY]="false"
-          [model]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
-        </datatable-header-cell>
-      </div>
-      <div
-        class="datatable-row-center"
-        [ngStyle]="stylesByGroup('center')"
-        *ngIf="state.columnsByPin.center.length">
-        <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.center"
-          resizeable
-          [resizeEnabled]="column.resizeable"
-          (onResize)="columnResized($event, column)"
-          long-press
-          (onLongPress)="drag = true"
-          (onLongPressEnd)="drag = false"
-          draggable
-          [dragX]="column.draggable && drag"
-          [dragY]="false"
-          [model]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
-        </datatable-header-cell>
-      </div>
-      <div
-        class="datatable-row-right"
-        [ngStyle]="stylesByGroup('right')"
-        *ngIf="state.columnsByPin.right.length">
-        <datatable-header-cell
-          *ngFor="let column of state.columnsByPin.right"
-          resizeable
-          [resizeEnabled]="column.resizeable"
-          (onResize)="columnResized($event, column)"
-          long-press
-          (onLongPress)="drag = true"
-          (onLongPressEnd)="drag = false"
-          draggable
-          [dragX]="column.draggable && drag"
-          [dragY]="false"
-          [model]="column"
-          (onColumnChange)="onColumnChange.emit($event)">
-        </datatable-header-cell>
-      </div>
-    </div>
+
+      <th datatable-header-cell
+        *ngFor="let column of state.columnsByPin.center"
+
+        long-press
+        (onLongPress)="drag = true"
+        (onLongPressEnd)="drag = false"
+        draggable
+        [dragX]="column.draggable && drag"
+        [dragY]="false"
+        [model]="column"
+        (onColumnChange)="onColumnChange.emit($event)">
+      </th>
+    </tr>
   `,
   host: {
     '[style.width]': 'headerWidth',
