@@ -3,6 +3,17 @@ The components' selectors and HTML on this project have been changed to use the 
 
 Some features have been disabled as well (auto resizing)
 
+## Update 9/25/2016
+Made some changes that expose events for filtering and changing of page limits
+
+### Header Filter
+* Dropdown for changing page limits (Done)
+* Input box for filtering (Done)
+* Delay and minLength support for filtering input (Done)
+* Column Options (In Progress)
+* Exports to csv, pdf, etc (In Progress)
+* Material Style (Pending)
+
 # ORIGINAL README
 
 

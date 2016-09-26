@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import {
   TableOptions,
   TableColumn,
-  ColumnMode
+  // ColumnMode
 } from '../angular2-data-table';
 import '../themes/material.scss';
 
@@ -12,11 +12,14 @@ import '../themes/material.scss';
   template: `
     <div>
       <h3>basic</h3>
-      <table datatable
+      <datatable
         class=''
+
+        (onDataTableLengthChange)="changePageLimit($event)"
+        (onDataTableFilterChange)="filterChanged($event)"
         [rows]='rows'
         [options]='options'>
-      </table>
+      </datatable>
     </div>
   `
 })
@@ -30,6 +33,9 @@ export class App {
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 25,
+    showFiltering: false,
+    showPageLimitOptions: false,
+    showColumnOptions: false,
     columns: [
       new TableColumn({ prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Gender' }),
@@ -52,6 +58,14 @@ export class App {
     };
 
     req.send();
+  }
+
+  changePageLimit(event) {
+    console.log('CHANGING PAGE LIMIT', event);
+  }
+
+  filterChanged(event) {
+    console.log('FILTER CHANGED', event);
   }
 
 }

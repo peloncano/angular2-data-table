@@ -24,9 +24,16 @@ import { DataTableColumn } from './DataTableColumn';
 import { StateService } from '../services/State';
 
 @Component({
-  selector: 'table[datatable]',
+  selector: 'datatable',
   providers: [StateService],
   template: `
+
+    <div *ngIf="showHeadFilter()" datatable-header-filter 
+      (onDataTableLengthChange)="onDataTableLengthChange.emit($event)"
+      (onDataTableFilterChange)="onDataTableFilterChange.emit($event)"
+      ></div>
+
+    <table>
       <thead datatable-header
         (onColumnChange)="onColumnChange.emit($event)">
       </thead>
@@ -39,6 +46,7 @@ import { StateService } from '../services/State';
       <datatable-footer
         (onPageChange)="state.setPage($event)">
       </datatable-footer>
+    </table>
   `
 })
 export class DataTable implements OnInit, DoCheck, AfterViewInit {
@@ -52,6 +60,9 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter();
   @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
+
+  @Output() onDataTableLengthChange: EventEmitter<any> = new EventEmitter();
+  @Output() onDataTableFilterChange: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
 
@@ -169,6 +180,10 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
   onRowSelect(event) {
     this.state.setSelected(event);
     this.onSelectionChange.emit(event);
+  }
+
+  showHeadFilter() {
+    return this.options.showPageLimitOptions || this.options.showFiltering || this.options.showColumnOptions;
   }
 
   @HostListener('window:resize')

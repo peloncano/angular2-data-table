@@ -67,6 +67,27 @@ export class TableOptions {
   // sorts
   sorts: Array<Sort> = [];
 
+  // Page Limit options
+  showPageLimitOptions: boolean = true;
+
+  // Default page limits options
+  pageLimits: Array<number> = [10, 25, 50, 100];
+
+  // default page limit
+  defaultPageLimit: number = 50;
+
+  // filtering search
+  showFiltering: boolean = true;
+
+  // filter delay in milliseconds
+  tableFilterDelay: number = 300;
+
+  // filter minimun characters
+  tableFilterMinLength: number = 3; 
+  
+  // column options
+  showColumnOptions: boolean = true;
+
   constructor(props: any) {
     Object.assign(this, props);
   }

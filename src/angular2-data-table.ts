@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule }   from '@angular/forms';
 
 // Components
 import { DataTable } from './components/DataTable';
 import { DataTableColumn } from './components/DataTableColumn';
 import { DataTableHeader } from './components/header/Header';
+import { DataTableHeaderFilter } from './components/header/HeaderFilter';
 import { DataTableBody } from './components/body/Body';
 import { DataTableFooter } from './components/footer/Footer';
 import { DataTableHeaderCell } from './components/header/HeaderCell';
@@ -35,6 +37,7 @@ import { Sort } from './models/Sort';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule
   ],
   declarations: [
@@ -48,6 +51,7 @@ import { Sort } from './models/Sort';
     DataTable,
     DataTableColumn,
     DataTableHeader,
+    DataTableHeaderFilter,
     DataTableHeaderCell,
     DataTableBody,
     DataTableFooter,

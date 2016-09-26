@@ -68,7 +68,7 @@ export class App {
   }
 
   updateFilter(val) {
-    console.log("updateFilter", val);
+    console.log('updateFilter', val);
     
     // remove existing
     this.rows.splice(0, this.rows.length);
