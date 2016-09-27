@@ -37,7 +37,7 @@
   "engineStrict": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swimlane/angular2-data-table.git"
+    "url": "git+https://github.com/peloncano/angular2-data-table.git"
   },
   "keywords": [
     "angularjs",
@@ -47,9 +47,9 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/swimlane/angular2-data-table/issues"
+    "url": "https://github.com/peloncano/angular2-data-table/issues"
   },
-  "homepage": "https://github.com/swimlane/angular2-data-table#readme",
+  "homepage": "https://github.com/peloncano/angular2-data-table#readme",
   "peerDependencies": {
     "@angular/common": "~2.0.0",
     "@angular/compiler": "~2.0.0",
