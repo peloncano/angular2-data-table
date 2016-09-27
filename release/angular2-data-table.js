@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+var forms_1 = require('@angular/forms');
 // Components
 var DataTable_1 = require('./components/DataTable');
 var DataTableColumn_1 = require('./components/DataTableColumn');
 var Header_1 = require('./components/header/Header');
+var HeaderFilter_1 = require('./components/header/HeaderFilter');
 var Body_1 = require('./components/body/Body');
 var Footer_1 = require('./components/footer/Footer');
 var HeaderCell_1 = require('./components/header/HeaderCell');
@@ -51,6 +53,7 @@ var Angular2DataTableModule = (function () {
     Angular2DataTableModule = __decorate([
         core_1.NgModule({
             imports: [
+                forms_1.FormsModule,
                 common_1.CommonModule
             ],
             declarations: [
@@ -64,6 +67,7 @@ var Angular2DataTableModule = (function () {
                 DataTable_1.DataTable,
                 DataTableColumn_1.DataTableColumn,
                 Header_1.DataTableHeader,
+                HeaderFilter_1.DataTableHeaderFilter,
                 HeaderCell_1.DataTableHeaderCell,
                 Body_1.DataTableBody,
                 Footer_1.DataTableFooter,

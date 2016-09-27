@@ -44,6 +44,22 @@ var TableOptions = (function () {
         this.sortType = SortType_1.SortType.single;
         // sorts
         this.sorts = [];
+        // Table classes
+        this.tableClasses = '';
+        // Page Limit options
+        this.showPageLimitOptions = true;
+        // Default page limits options
+        this.pageLimits = [10, 25, 50, 100];
+        // default page limit
+        this.defaultPageLimit = 50;
+        // filtering search
+        this.showFiltering = true;
+        // filter delay in milliseconds
+        this.tableFilterDelay = 300;
+        // filter minimun characters
+        this.tableFilterMinLength = 3;
+        // column options
+        this.showColumnOptions = true;
         Object.assign(this, props);
     }
     return TableOptions;

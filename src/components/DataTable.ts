@@ -33,7 +33,7 @@ import { StateService } from '../services/State';
       (onDataTableFilterChange)="onDataTableFilterChange.emit($event)"
       ></div>
 
-    <table>
+    <table [className]="options.tableClasses">
       <thead datatable-header
         (onColumnChange)="onColumnChange.emit($event)">
       </thead>

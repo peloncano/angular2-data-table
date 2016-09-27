@@ -26,6 +26,8 @@ var DataTable = (function () {
         this.onRowClick = new core_1.EventEmitter();
         this.onSelectionChange = new core_1.EventEmitter();
         this.onColumnChange = new core_1.EventEmitter();
+        this.onDataTableLengthChange = new core_1.EventEmitter();
+        this.onDataTableFilterChange = new core_1.EventEmitter();
         this.element = element.nativeElement;
         this.element.classList.add('datatable');
         this.rowDiffer = differs.find({}).create(null);
@@ -119,6 +121,9 @@ var DataTable = (function () {
         this.state.setSelected(event);
         this.onSelectionChange.emit(event);
     };
+    DataTable.prototype.showHeadFilter = function () {
+        return this.options.showPageLimitOptions || this.options.showFiltering || this.options.showColumnOptions;
+    };
     DataTable.prototype.resize = function () {
         this.adjustSizes();
     };
@@ -192,6 +197,14 @@ var DataTable = (function () {
         __metadata('design:type', core_1.EventEmitter)
     ], DataTable.prototype, "onColumnChange", void 0);
     __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], DataTable.prototype, "onDataTableLengthChange", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], DataTable.prototype, "onDataTableFilterChange", void 0);
+    __decorate([
         core_1.ContentChildren(DataTableColumn_1.DataTableColumn), 
         __metadata('design:type', core_1.QueryList)
     ], DataTable.prototype, "columns", void 0);
@@ -223,9 +236,9 @@ var DataTable = (function () {
     ], DataTable.prototype, "isSelectable", null);
     DataTable = __decorate([
         core_1.Component({
-            selector: 'table[datatable]',
+            selector: 'datatable',
             providers: [State_1.StateService],
-            template: "\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n  "
+            template: "\n\n    <div *ngIf=\"showHeadFilter()\" datatable-header-filter \n      (onDataTableLengthChange)=\"onDataTableLengthChange.emit($event)\"\n      (onDataTableFilterChange)=\"onDataTableFilterChange.emit($event)\"\n      ></div>\n\n    <table [className]=\"options.tableClasses\">\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </table>\n  "
         }),
         __param(0, core_1.Host()), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])

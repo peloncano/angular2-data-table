@@ -1,13 +1,13 @@
 /**
- * angular2-data-table v0.6.1 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v1.0.0 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('rxjs/Rx')) :
-    typeof define === 'function' && define.amd ? define('angular2-data-table', ['exports', '@angular/core', '@angular/common', 'rxjs/Rx'], factory) :
-    (factory((global.angular2DataTable = global.angular2DataTable || {}),global.ng.core,global.ng.common,global.Rx));
-}(this, (function (exports,_angular_core,_angular_common,rxjs_Rx) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/forms'), require('rxjs/Rx')) :
+    typeof define === 'function' && define.amd ? define('angular2-data-table', ['exports', '@angular/core', '@angular/common', '@angular/forms', 'rxjs/Rx'], factory) :
+    (factory((global.angular2DataTable = global.angular2DataTable || {}),global.ng.core,global.ng.common,global._angular_forms,global.Rx));
+}(this, (function (exports,_angular_core,_angular_common,_angular_forms,rxjs_Rx) { 'use strict';
 
 function __decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -281,6 +281,22 @@ var TableOptions = (function () {
         this.sortType = exports.SortType.single;
         // sorts
         this.sorts = [];
+        // Table classes
+        this.tableClasses = '';
+        // Page Limit options
+        this.showPageLimitOptions = true;
+        // Default page limits options
+        this.pageLimits = [10, 25, 50, 100];
+        // default page limit
+        this.defaultPageLimit = 50;
+        // filtering search
+        this.showFiltering = true;
+        // filter delay in milliseconds
+        this.tableFilterDelay = 300;
+        // filter minimun characters
+        this.tableFilterMinLength = 3;
+        // column options
+        this.showColumnOptions = true;
         Object.assign(this, props);
     }
     return TableOptions;
@@ -650,6 +666,8 @@ var DataTable = (function () {
         this.onRowClick = new _angular_core.EventEmitter();
         this.onSelectionChange = new _angular_core.EventEmitter();
         this.onColumnChange = new _angular_core.EventEmitter();
+        this.onDataTableLengthChange = new _angular_core.EventEmitter();
+        this.onDataTableFilterChange = new _angular_core.EventEmitter();
         this.element = element.nativeElement;
         this.element.classList.add('datatable');
         this.rowDiffer = differs.find({}).create(null);
@@ -743,6 +761,9 @@ var DataTable = (function () {
         this.state.setSelected(event);
         this.onSelectionChange.emit(event);
     };
+    DataTable.prototype.showHeadFilter = function () {
+        return this.options.showPageLimitOptions || this.options.showFiltering || this.options.showColumnOptions;
+    };
     DataTable.prototype.resize = function () {
         this.adjustSizes();
     };
@@ -816,8 +837,16 @@ var DataTable = (function () {
         __metadata('design:type', (typeof (_f = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _f) || Object)
     ], DataTable.prototype, "onColumnChange", void 0);
     __decorate([
+        _angular_core.Output(), 
+        __metadata('design:type', (typeof (_g = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _g) || Object)
+    ], DataTable.prototype, "onDataTableLengthChange", void 0);
+    __decorate([
+        _angular_core.Output(), 
+        __metadata('design:type', (typeof (_h = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _h) || Object)
+    ], DataTable.prototype, "onDataTableFilterChange", void 0);
+    __decorate([
         _angular_core.ContentChildren(DataTableColumn), 
-        __metadata('design:type', (typeof (_g = typeof _angular_core.QueryList !== 'undefined' && _angular_core.QueryList) === 'function' && _g) || Object)
+        __metadata('design:type', (typeof (_j = typeof _angular_core.QueryList !== 'undefined' && _angular_core.QueryList) === 'function' && _j) || Object)
     ], DataTable.prototype, "columns", void 0);
     __decorate([
         _angular_core.HostListener('window:resize'), 
@@ -847,15 +876,15 @@ var DataTable = (function () {
     ], DataTable.prototype, "isSelectable", null);
     DataTable = __decorate([
         _angular_core.Component({
-            selector: 'table[datatable]',
+            selector: 'datatable',
             providers: [StateService],
-            template: "\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n  "
+            template: "\n\n    <div *ngIf=\"showHeadFilter()\" datatable-header-filter \n      (onDataTableLengthChange)=\"onDataTableLengthChange.emit($event)\"\n      (onDataTableFilterChange)=\"onDataTableFilterChange.emit($event)\"\n      ></div>\n\n    <table [className]=\"options.tableClasses\">\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </table>\n  "
         }),
         __param(0, _angular_core.Host()), 
-        __metadata('design:paramtypes', [(typeof (_h = typeof StateService !== 'undefined' && StateService) === 'function' && _h) || Object, (typeof (_j = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _j) || Object, (typeof (_k = typeof _angular_core.KeyValueDiffers !== 'undefined' && _angular_core.KeyValueDiffers) === 'function' && _k) || Object])
+        __metadata('design:paramtypes', [(typeof (_k = typeof StateService !== 'undefined' && StateService) === 'function' && _k) || Object, (typeof (_l = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _l) || Object, (typeof (_m = typeof _angular_core.KeyValueDiffers !== 'undefined' && _angular_core.KeyValueDiffers) === 'function' && _m) || Object])
     ], DataTable);
     return DataTable;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 }());
 
 var cache = {};
@@ -989,6 +1018,57 @@ var DataTableHeader = (function () {
     ], DataTableHeader);
     return DataTableHeader;
     var _a, _b, _c;
+}());
+
+var DataTableHeaderFilter = (function () {
+    function DataTableHeaderFilter(element, state) {
+        this.element = element;
+        this.state = state;
+        this.onDataTableLengthChange = new _angular_core.EventEmitter();
+        this.onDataTableFilterChange = new _angular_core.EventEmitter();
+        // element.nativeElement.classList.add('datatable-header-cell');
+    }
+    DataTableHeaderFilter.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dtPagelimit = this.state.options.defaultPageLimit;
+        // https://manuel-rauber.com/2015/12/31/debouncing-angular-2-input-component/
+        var eventStream = rxjs_Rx.Observable.fromEvent(this.element.nativeElement, 'keyup')
+            .map(function () { return _this.dtFilter; })
+            .debounceTime(this.state.options.tableFilterDelay)
+            .distinctUntilChanged();
+        eventStream.subscribe(function (input) {
+            return input && input.length >= _this.state.options.tableFilterMinLength ?
+                _this.onDataTableFilterChange.emit(input) : input;
+        });
+    };
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', Number)
+    ], DataTableHeaderFilter.prototype, "dtPagelimit", void 0);
+    __decorate([
+        _angular_core.Input(), 
+        __metadata('design:type', (typeof (_a = typeof TableColumn !== 'undefined' && TableColumn) === 'function' && _a) || Object)
+    ], DataTableHeaderFilter.prototype, "model", void 0);
+    __decorate([
+        _angular_core.Output(), 
+        __metadata('design:type', (typeof (_b = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _b) || Object)
+    ], DataTableHeaderFilter.prototype, "onDataTableLengthChange", void 0);
+    __decorate([
+        _angular_core.Output(), 
+        __metadata('design:type', (typeof (_c = typeof _angular_core.EventEmitter !== 'undefined' && _angular_core.EventEmitter) === 'function' && _c) || Object)
+    ], DataTableHeaderFilter.prototype, "onDataTableFilterChange", void 0);
+    DataTableHeaderFilter = __decorate([
+        _angular_core.Component({
+            selector: 'div[datatable-header-filter]',
+            template: "\n    <div class=\"filter-ctrl\">\n        <div class=\"qa-filter-left\">\n            <div *ngIf=\"state.options.showPageLimitOptions\" class=\"dataTables_length\">\n                <label>Show \n                <select \n                    [(ngModel)]='dtPagelimit'\n                    (ngModelChange)='onDataTableLengthChange.emit($event)' \n                            name=\"search-results_length\">\n                    <option \n                        *ngFor=\"let pageLimitValue of state.options.pageLimits\" \n                         [ngValue]=\"pageLimitValue\" \n                        >{{pageLimitValue}}</option>\n                    </select> entries</label>\n            </div>\n\n            <div *ngIf=\"state.options.showColumnOptions\" class=\"dropdown column-toggle-ctrl\">\n                <span class=\"dropdown-toggle\">Columns</span>\n                <ul class=\"dropdown-menu\">\n                <li><a href=\"javascript:void(0)\" class=\"off\">Column 1</a></li>\n                <li><a href=\"javascript:void(0)\" class=\"off\">Column 2</a></li>\n                <li><a href=\"javascript:void(0)\" class=\"on\">Column 3</a></li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"qa-filter-right\">\n            <div *ngIf=\"state.options.showFiltering\" class=\"dataTables_filter\">\n                <label>\n                    <input type=\"text\" \n                        [(ngModel)]='dtFilter'>\n                </label>\n            </div>\n            <div class=\"dropdown qa-export-tool \">\n                <span class=\"dropdown-toggle\">Export</span>\n                <div class=\"dropdown-menu DTTT_container \">\n                    <a class=\"DTTT_button DTTT_button_copy\" >\n                        <span>Copy</span>\n                    </a>\n                    <a class=\"DTTT_button DTTT_button_print\" title=\"View print view\">\n                        <span>Print</span>\n                    </a>\n                    <a class=\"DTTT_button DTTT_button_csv\">\n                        <span>CSV</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n  ",
+            host: {
+                '[className]': '\'filter-ctrl\''
+            }
+        }), 
+        __metadata('design:paramtypes', [(typeof (_d = typeof _angular_core.ElementRef !== 'undefined' && _angular_core.ElementRef) === 'function' && _d) || Object, (typeof (_e = typeof StateService !== 'undefined' && StateService) === 'function' && _e) || Object])
+    ], DataTableHeaderFilter);
+    return DataTableHeaderFilter;
+    var _a, _b, _c, _d, _e;
 }());
 
 var Keys;
@@ -2207,6 +2287,7 @@ var Angular2DataTableModule = (function () {
     Angular2DataTableModule = __decorate([
         _angular_core.NgModule({
             imports: [
+                _angular_forms.FormsModule,
                 _angular_common.CommonModule
             ],
             declarations: [
@@ -2220,6 +2301,7 @@ var Angular2DataTableModule = (function () {
                 DataTable,
                 DataTableColumn,
                 DataTableHeader,
+                DataTableHeaderFilter,
                 DataTableHeaderCell,
                 DataTableBody,
                 DataTableFooter,

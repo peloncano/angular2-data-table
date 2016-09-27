@@ -34,6 +34,7 @@ export class App {
     rowHeight: 'auto',
     limit: 25,
     showFiltering: false,
+    tableClasses: 'material',
     showPageLimitOptions: false,
     showColumnOptions: false,
     columns: [

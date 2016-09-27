@@ -67,6 +67,9 @@ export class TableOptions {
   // sorts
   sorts: Array<Sort> = [];
 
+  // Table classes
+  tableClasses: string = '';
+
   // Page Limit options
   showPageLimitOptions: boolean = true;
 
