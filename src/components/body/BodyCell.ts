@@ -1,4 +1,4 @@
-import { Component, Input, PipeTransform, HostBinding, ElementRef } from '@angular/core';
+import { Component, Input, PipeTransform, ElementRef } from '@angular/core';
 import { TableColumn } from '../../models/TableColumn';
 import { deepValueGetter } from '../../utils/deepGetter';
 
@@ -36,8 +36,8 @@ export class DataTableBodyCell {
     return userPipe ? userPipe.transform(prop) : prop;
   }
 
-  @HostBinding('style.width') get width() {
-    return this.column.width + 'px';
-  }
+  // @HostBinding('style.width') get width() {
+  //   return this.column.width + 'px';
+  // }
 
 }

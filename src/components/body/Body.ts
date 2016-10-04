@@ -5,18 +5,18 @@ import {
   OnInit,
   HostBinding,
   OnDestroy,
-  ViewChild,
+  // ViewChild,
   ElementRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Keys } from '../../utils/keys';
-import { selectRows, selectRowsBetween } from '../../utils/selection';
+// import { Keys } from '../../utils/keys';
+// import { selectRows, selectRowsBetween } from '../../utils/selection';
 import { translateXY } from '../../utils/translate';
 
 import { StateService } from '../../services/State';
-import { SelectionType } from '../../enums/SelectionType';
-import { Scroller } from '../../directives/Scroller';
+// import { SelectionType } from '../../enums/SelectionType';
+// import { Scroller } from '../../directives/Scroller';
 
 @Component({
   selector: 'tbody[datatable-body]',
@@ -30,8 +30,6 @@ import { Scroller } from '../../directives/Scroller';
         [style.height]="state.options.rowHeight + 'px'"
         *ngFor="let row of rows; let i = index;"
         [attr.tabindex]="i"
-        (click)="rowClicked($event, i, row)"
-        (keydown)="rowKeydown($event, i, row)"
         [row]="row"
         [class.datatable-row-even]="row.$$index % 2 === 0"
         [class.datatable-row-odd]="row.$$index % 2 !== 0">
@@ -43,16 +41,39 @@ import { Scroller } from '../../directives/Scroller';
         [innerHTML]="state.options.emptyMessage">
       </div>
   `
+  // template: `
+  //     <datatable-progress
+  //       *ngIf="state.options.loadingIndicator">
+  //     </datatable-progress>
+
+  //     <tr datatable-body-row
+  //       [ngStyle]="getRowsStyles(row)"
+  //       [style.height]="state.options.rowHeight + 'px'"
+  //       *ngFor="let row of rows; let i = index;"
+  //       [attr.tabindex]="i"
+  //       (click)="rowClicked($event, i, row)"
+  //       (keydown)="rowKeydown($event, i, row)"
+  //       [row]="row"
+  //       [class.datatable-row-even]="row.$$index % 2 === 0"
+  //       [class.datatable-row-odd]="row.$$index % 2 !== 0">
+  //     </tr>
+
+  //     <div
+  //       class="empty-row"
+  //       *ngIf="!rows.length"
+  //       [innerHTML]="state.options.emptyMessage">
+  //     </div>
+  // `
 })
 export class DataTableBody implements OnInit, OnDestroy {
 
   @Output() onRowClick: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelect: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(Scroller) scroller: Scroller;
+  // @ViewChild(Scroller) scroller: Scroller;
 
   public rows: any;
-  private prevIndex: number;
+  // private prevIndex: number;
   private sub: Subscription;
 
   get selectEnabled() {
@@ -68,14 +89,14 @@ export class DataTableBody implements OnInit, OnDestroy {
     }
   }
 
-  @HostBinding('style.width')
-  get bodyWidth() {
-    if (this.state.options.scrollbarH) {
-      return this.state.innerWidth + 'px';
-    } else {
-      return '100%';
-    }
-  }
+  // @HostBinding('style.width')
+  // get bodyWidth() {
+  //   if (this.state.options.scrollbarH) {
+  //     return this.state.innerWidth + 'px';
+  //   } else {
+  //     return '100%';
+  //   }
+  // }
 
   constructor(public state: StateService, element: ElementRef) {
     element.nativeElement.classList.add('datatable-body');
@@ -88,10 +109,10 @@ export class DataTableBody implements OnInit, OnDestroy {
       this.updateRows();
       this.hideIndicator();
 
-      if(this.state.options.scrollbarV && action.type === 'pager-event') {
-        const offset = (this.state.options.rowHeight * action.limit) * action.offset;
-        this.scroller.setOffset(offset);
-      }
+      // if(this.state.options.scrollbarV && action.type === 'pager-event') {
+      //   const offset = (this.state.options.rowHeight * action.limit) * action.offset;
+      //   this.scroller.setOffset(offset);
+      // }
     });
 
     this.sub.add(this.state.onRowsUpdate.subscribe(rows => {
@@ -100,13 +121,13 @@ export class DataTableBody implements OnInit, OnDestroy {
     }));
   }
 
-  onBodyScroll(props) {
-    this.state.offsetY = props.scrollYPos;
-    this.state.offsetX = props.scrollXPos;
+  // onBodyScroll(props) {
+  //   this.state.offsetY = props.scrollYPos;
+  //   this.state.offsetX = props.scrollXPos;
 
-    this.updatePage(props.direction);
-    this.updateRows();
-  }
+  //   this.updatePage(props.direction);
+  //   this.updateRows();
+  // }
 
   updatePage(direction) {
     const idxs = this.state.indexes;
@@ -168,46 +189,46 @@ export class DataTableBody implements OnInit, OnDestroy {
     setTimeout(() => this.state.options.loadingIndicator = false, 500);
   }
 
-  rowClicked(event, index, row): void {
-    this.onRowClick.emit({event, row});
-    this.selectRow(event, index, row);
-  }
+  // rowClicked(event, index, row): void {
+  //   this.onRowClick.emit({event, row});
+  //   this.selectRow(event, index, row);
+  // }
 
-  rowKeydown(event, index, row) {
-    if (event.keyCode === Keys.return && this.selectEnabled) {
-      this.selectRow(event, index, row);
-    } else if (event.keyCode === Keys.up || event.keyCode === Keys.down) {
-      const dom = event.keyCode === Keys.up ?
-        event.target.previousElementSibling :
-        event.target.nextElementSibling;
-      if (dom) dom.focus();
-    }
-  }
+  // rowKeydown(event, index, row) {
+  //   if (event.keyCode === Keys.return && this.selectEnabled) {
+  //     this.selectRow(event, index, row);
+  //   } else if (event.keyCode === Keys.up || event.keyCode === Keys.down) {
+  //     const dom = event.keyCode === Keys.up ?
+  //       event.target.previousElementSibling :
+  //       event.target.nextElementSibling;
+  //     if (dom) dom.focus();
+  //   }
+  // }
 
-  selectRow(event, index, row) {
-    if (!this.selectEnabled) return;
+  // selectRow(event, index, row) {
+  //   if (!this.selectEnabled) return;
 
-    const multiShift = this.state.options.selectionType === SelectionType.multiShift;
-    const multiClick = this.state.options.selectionType === SelectionType.multi;
+  //   const multiShift = this.state.options.selectionType === SelectionType.multiShift;
+  //   const multiClick = this.state.options.selectionType === SelectionType.multi;
 
-    let selections = [];
-    if (multiShift || multiClick) {
-      if (multiShift && event.shiftKey) {
-        const selected = [...this.state.selected];
-        selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
-      } else if (multiShift && !event.shiftKey) {
-        selections.push(row);
-      } else {
-        const selected = [...this.state.selected];
-        selections = selectRows(selected, row);
-      }
-    } else {
-      selections.push(row);
-    }
+  //   let selections = [];
+  //   if (multiShift || multiClick) {
+  //     if (multiShift && event.shiftKey) {
+  //       const selected = [...this.state.selected];
+  //       selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
+  //     } else if (multiShift && !event.shiftKey) {
+  //       selections.push(row);
+  //     } else {
+  //       const selected = [...this.state.selected];
+  //       selections = selectRows(selected, row);
+  //     }
+  //   } else {
+  //     selections.push(row);
+  //   }
 
-    this.prevIndex = index;
-    this.onRowSelect.emit(selections);
-  }
+  //   this.prevIndex = index;
+  //   this.onRowSelect.emit(selections);
+  // }
 
   ngOnDestroy(): void {
     if (this.sub) {

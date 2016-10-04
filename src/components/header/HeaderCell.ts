@@ -35,10 +35,10 @@ import { SortDirection } from '../../enums/SortDirection';
   host: {
     '[className]': 'model.classes',
     '[class.sortable]': 'model.sortable',
-    '[class.resizable]': 'model.resizable',
-    '[style.width]': 'model.width + "px"',
-    '[style.minWidth]': 'model.minWidth + "px"',
-    '[style.maxWidth]': 'model.maxWidth + "px"',
+    // '[class.resizable]': 'model.resizable',
+    // '[style.width]': 'model.width + "px"',
+    // '[style.minWidth]': 'model.minWidth + "px"',
+    // '[style.maxWidth]': 'model.maxWidth + "px"',
     '[style.height]': 'model.height + "px"',
     '[attr.title]': 'name'
   }
