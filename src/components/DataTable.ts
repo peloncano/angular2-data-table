@@ -31,6 +31,7 @@ import { StateService } from '../services/State';
     <div *ngIf="showHeadFilter()" datatable-header-filter 
       (onDataTableLengthChange)="onDataTableLengthChange.emit($event)"
       (onDataTableFilterChange)="onDataTableFilterChange.emit($event)"
+      (onDataTableExportToolEvent)="onDataTableExportToolEvent.emit($event)"
       ></div>
 
     <table [className]="options.tableClasses">
@@ -63,6 +64,7 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
   @Output() onDataTableLengthChange: EventEmitter<any> = new EventEmitter();
   @Output() onDataTableFilterChange: EventEmitter<any> = new EventEmitter();
+  @Output() onDataTableExportToolEvent: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DataTableColumn) columns: QueryList<DataTableColumn>;
 

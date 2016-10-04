@@ -91,6 +91,26 @@ export class TableOptions {
   // column options
   showColumnOptions: boolean = true;
 
+  // column options
+  showExportingTool: boolean = true;
+  exportingTools: any = [
+                            {
+                              type: 'csv',
+                              label: 'CSV',
+                              class: 'button_csv'
+                            },
+                            {
+                              type: 'print',
+                              label: 'Print',
+                              class: 'button_print'
+                            },
+                            {
+                              type: 'copy',
+                              label: 'Copy',
+                              class: 'button_copy'
+                            }
+                        ];
+
   constructor(props: any) {
     Object.assign(this, props);
   }

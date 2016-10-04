@@ -17,6 +17,7 @@ import '../themes/material.scss';
 
         (onDataTableLengthChange)="changePageLimit($event)"
         (onDataTableFilterChange)="filterChanged($event)"
+        (onDataTableExportToolEvent)="exportSomething($event)"
         [rows]='rows'
         [options]='options'>
       </datatable>
@@ -33,10 +34,11 @@ export class App {
     footerHeight: 50,
     rowHeight: 'auto',
     limit: 25,
-    showFiltering: false,
+    showFiltering: true,
     tableClasses: 'material',
     showPageLimitOptions: false,
     showColumnOptions: false,
+    showExportingTool: true,
     columns: [
       new TableColumn({ prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Gender' }),
@@ -67,6 +69,10 @@ export class App {
 
   filterChanged(event) {
     console.log('FILTER CHANGED', event);
+  }
+
+  exportSomething(event) {
+    console.log('EXPORT SELECTED', event);
   }
 
 }
