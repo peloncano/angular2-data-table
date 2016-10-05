@@ -29,10 +29,10 @@ import { Observable } from 'rxjs/Rx';
                     </select> entries</label>
             </div>
 
-            <div *ngIf="state.options.showColumnOptions" class="dropdown column-toggle-ctrl">
-                <span class="dropdown-toggle">Columns</span>
+            <div *ngIf="state.options.showColumnOptions" class="dropdown column-toggle-ctrl" [class.open]="showOptions">
+                <span class="dropdown-toggle" (click)="showOptions? showOptions = false: showOptions = true">Columns</span>
                 <ul class="dropdown-menu">
-                <li *ngFor="let column of state.options.columns; let i = index;"><a href="javascript:void(0)" [class.off]="column.hide" [class.on]="!column.hide" (click)="columnOptionClick(i, column)">{{column.name}}</a></li>
+                <li *ngFor="let column of state.columnOptions; let i = index;"><a href="javascript:void(0)" [class.off]="column.hide" [class.on]="!column.hide" (click)="columnOptionClick(i, column)">{{column.name}}</a></li>
                 </ul>
             </div>
         </div>
@@ -62,6 +62,8 @@ import { Observable } from 'rxjs/Rx';
     }
 })
 export class DataTableHeaderFilter implements OnInit {
+
+    showOptions: boolean = false;
 
     @Input() dtPagelimit: number;
     dtFilter: string;
@@ -96,5 +98,9 @@ export class DataTableHeaderFilter implements OnInit {
 
     exportingToolClicked(event, type) {
         this.onDataTableExportToolEvent.emit({type, event});
+    }
+
+    openColumnOptions() {
+        
     }
 }

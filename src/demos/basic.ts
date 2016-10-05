@@ -42,7 +42,8 @@ export class App {
     columns: [
       new TableColumn({ name: "Name", prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Gender', hide: true }),
-      new TableColumn({ name: 'Company' })
+      new TableColumn({ name: 'Company' }),
+      new TableColumn({ name: 'Actions', hide: true, hideInColumnOptions: true, prop: 'name' })
     ]
   });
 

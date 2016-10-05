@@ -30,6 +30,28 @@ export function columnsByPin(cols) {
 }
 
 /**
+ * Returns the column options available.
+ * @param {array} cols
+ */
+export function columnsOptions(cols) {
+  let ret = [];
+
+  if(cols) {
+    for(let col of cols) {
+
+      if(col.hideInColumnOptions) {
+        continue;
+      }
+      
+      ret.push(col);
+
+    }
+  }
+
+  return ret;
+}
+
+/**
  * Returns the widths of all group sets of a column
  * @param {object} groups
  * @param {array} all

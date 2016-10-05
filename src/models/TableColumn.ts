@@ -79,7 +79,11 @@ export class TableColumn {
   // Classes to apply to the column
   classes: string = '';
 
+  // Hide the column from the table - but should be available in column options
   hide: boolean = false;
+
+  // Hide the column from column options - column will be available in the table
+  hideInColumnOptions: boolean = false;
 
   constructor(props?: any) {
     Object.assign(this, props);
