@@ -25,5 +25,6 @@ export declare class TableColumn {
     headerTemplate: any;
     classes: string;
     hide: boolean;
+    hideInColumnOptions: boolean;
     constructor(props?: any);
 }

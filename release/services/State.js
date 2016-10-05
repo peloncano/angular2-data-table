@@ -32,6 +32,13 @@ var StateService = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StateService.prototype, "columnOptions", {
+        get: function () {
+            return column_1.columnsOptions(this.options.columns);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StateService.prototype, "columnGroupWidths", {
         get: function () {
             return column_1.columnGroupWidths(this.columnsByPin, this.options.columns);

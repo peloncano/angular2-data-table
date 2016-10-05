@@ -19,6 +19,7 @@ export declare class StateService {
         center: any[];
         right: any[];
     };
+    readonly columnOptions: any[];
     readonly columnGroupWidths: {
         left: number;
         center: number;

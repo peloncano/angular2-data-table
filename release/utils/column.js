@@ -30,6 +30,24 @@ function columnsByPin(cols) {
 }
 exports.columnsByPin = columnsByPin;
 /**
+ * Returns the column options available.
+ * @param {array} cols
+ */
+function columnsOptions(cols) {
+    var ret = [];
+    if (cols) {
+        for (var _i = 0, cols_2 = cols; _i < cols_2.length; _i++) {
+            var col = cols_2[_i];
+            if (col.hideInColumnOptions) {
+                continue;
+            }
+            ret.push(col);
+        }
+    }
+    return ret;
+}
+exports.columnsOptions = columnsOptions;
+/**
  * Returns the widths of all group sets of a column
  * @param {object} groups
  * @param {array} all

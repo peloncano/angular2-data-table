@@ -40,7 +40,10 @@ var TableColumn = (function () {
         this.canAutoResize = true;
         // Classes to apply to the column
         this.classes = '';
+        // Hide the column from the table - but should be available in column options
         this.hide = false;
+        // Hide the column from column options - column will be available in the table
+        this.hideInColumnOptions = false;
         Object.assign(this, props);
         if (!this.prop && this.name) {
             this.prop = camelCase_1.camelCase(this.name);

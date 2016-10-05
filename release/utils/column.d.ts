@@ -8,6 +8,11 @@ export declare function columnsByPin(cols: any): {
     right: any[];
 };
 /**
+ * Returns the column options available.
+ * @param {array} cols
+ */
+export declare function columnsOptions(cols: any): any[];
+/**
  * Returns the widths of all group sets of a column
  * @param {object} groups
  * @param {array} all

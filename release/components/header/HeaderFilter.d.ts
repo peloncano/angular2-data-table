@@ -4,6 +4,8 @@ import { TableColumn } from '../../models/TableColumn';
 export declare class DataTableHeaderFilter implements OnInit {
     element: ElementRef;
     private state;
+    showOptions: boolean;
+    isFilterActive: boolean;
     dtPagelimit: number;
     dtFilter: string;
     model: TableColumn;
@@ -15,4 +17,5 @@ export declare class DataTableHeaderFilter implements OnInit {
     ngOnInit(): void;
     columnOptionClick(index: any, column: any): void;
     exportingToolClicked(event: any, type: any): void;
+    openColumnOptions(): void;
 }
