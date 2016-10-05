@@ -32,7 +32,11 @@ import { Observable } from 'rxjs/Rx';
             <div *ngIf="state.options.showColumnOptions" class="dropdown column-toggle-ctrl" [class.open]="showOptions">
                 <span class="dropdown-toggle" (click)="showOptions? showOptions = false: showOptions = true">Columns</span>
                 <ul class="dropdown-menu">
-                <li *ngFor="let column of state.columnOptions; let i = index;"><a href="javascript:void(0)" [class.off]="column.hide" [class.on]="!column.hide" (click)="columnOptionClick(i, column)">{{column.name}}</a></li>
+                <li *ngFor="let column of state.columnOptions; let i = index;">
+                    <a href="javascript:void(0)" [class.off]="column.hide" 
+                        [class.on]="!column.hide" 
+                            (click)="columnOptionClick(i, column)">{{column.name}}</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -64,6 +68,7 @@ import { Observable } from 'rxjs/Rx';
 export class DataTableHeaderFilter implements OnInit {
 
     showOptions: boolean = false;
+    isFilterActive: boolean = false;
 
     @Input() dtPagelimit: number;
     dtFilter: string;
@@ -87,9 +92,26 @@ export class DataTableHeaderFilter implements OnInit {
             .debounceTime(this.state.options.tableFilterDelay)
             .distinctUntilChanged();
 
-        eventStream.subscribe(input =>
-                input && input.length >= this.state.options.tableFilterMinLength ?
-                this.onDataTableFilterChange.emit(input) : input);
+        eventStream.subscribe(input => {
+
+                // keep track if the filter input is active 
+                if(input && input.length >= this.state.options.tableFilterMinLength) {
+                    this.isFilterActive = true;
+                }
+
+                // Check to see if the input was blanked after the min length has been entered
+                if((input && input.length >= this.state.options.tableFilterMinLength) || (input === '' && this.isFilterActive)) {
+
+                    // If we are resetting the input - it is no longer active
+                    if(input === '') {
+                        this.isFilterActive = false;
+                    }
+                    
+                    this.onDataTableFilterChange.emit(input);
+                }
+
+                return input;
+            });
     }
 
     columnOptionClick(index, column) {
