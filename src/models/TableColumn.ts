@@ -79,6 +79,8 @@ export class TableColumn {
   // Classes to apply to the column
   classes: string = '';
 
+  hide: boolean = false;
+
   constructor(props?: any) {
     Object.assign(this, props);
 

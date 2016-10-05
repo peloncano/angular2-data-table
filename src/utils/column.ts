@@ -11,6 +11,11 @@ export function columnsByPin(cols) {
 
   if(cols) {
     for(let col of cols) {
+
+      if(col.hide) {
+        continue;
+      }
+
       if(col.frozenLeft) {
         ret.left.push(col);
       } else if(col.frozenRight) {

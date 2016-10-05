@@ -32,6 +32,7 @@ import { StateService } from '../services/State';
       (onDataTableLengthChange)="onDataTableLengthChange.emit($event)"
       (onDataTableFilterChange)="onDataTableFilterChange.emit($event)"
       (onDataTableExportToolEvent)="onDataTableExportToolEvent.emit($event)"
+      (onColumnChange)="showHideColumn($event)"
       ></div>
 
     <table [className]="options.tableClasses">
@@ -172,11 +173,11 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
       width = width - this.state.scrollbarWidth;
     }
 
-    if (this.options.columnMode === ColumnMode.force) {
-      forceFillColumnWidths(this.options.columns, width, forceIdx);
-    } else if (this.options.columnMode === ColumnMode.flex) {
-      adjustColumnWidths(this.options.columns, width);
-    }
+    // if (this.options.columnMode === ColumnMode.force) {
+    //   forceFillColumnWidths(this.options.columns, width, forceIdx);
+    // } else if (this.options.columnMode === ColumnMode.flex) {
+    //   adjustColumnWidths(this.options.columns, width);
+    // }
   }
 
   onRowSelect(event) {
@@ -188,36 +189,41 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     return this.options.showPageLimitOptions || this.options.showFiltering || this.options.showColumnOptions;
   }
 
+  showHideColumn(event) {
+    this.options.columns[event.index].hide = event.column.hide?false:true;
+    this.onColumnChange.emit(event);
+  }
+
   @HostListener('window:resize')
   resize() {
     this.adjustSizes();
   }
 
-  @HostBinding('class.fixed-header')
-  get isFixedHeader() {
-    const headerHeight: number|string = this.options.headerHeight;
-    return (typeof headerHeight === 'string') ? (<string>headerHeight) !== 'auto' : true;
-  }
+  // @HostBinding('class.fixed-header')
+  // get isFixedHeader() {
+  //   const headerHeight: number|string = this.options.headerHeight;
+  //   return (typeof headerHeight === 'string') ? (<string>headerHeight) !== 'auto' : true;
+  // }
 
-  @HostBinding('class.fixed-row')
-  get isFixedRow() {
-    const rowHeight: number|string = this.options.rowHeight;
-    return (typeof rowHeight === 'string') ? (<string>rowHeight) !== 'auto' : true;
-  }
+  // @HostBinding('class.fixed-row')
+  // get isFixedRow() {
+  //   const rowHeight: number|string = this.options.rowHeight;
+  //   return (typeof rowHeight === 'string') ? (<string>rowHeight) !== 'auto' : true;
+  // }
 
-  @HostBinding('class.scroll-vertical')
-  get isVertScroll() {
-    return this.options.scrollbarV;
-  }
+  // @HostBinding('class.scroll-vertical')
+  // get isVertScroll() {
+  //   return this.options.scrollbarV;
+  // }
 
-  @HostBinding('class.scroll-horz')
-  get isHorScroll() {
-    return this.options.scrollbarH;
-  }
+  // @HostBinding('class.scroll-horz')
+  // get isHorScroll() {
+  //   return this.options.scrollbarH;
+  // }
 
-  @HostBinding('class.selectable')
-  get isSelectable() {
-    return this.options.selectionType !== undefined;
-  }
+  // @HostBinding('class.selectable')
+  // get isSelectable() {
+  //   return this.options.selectionType !== undefined;
+  // }
 
 }

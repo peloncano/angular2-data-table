@@ -37,11 +37,11 @@ export class App {
     showFiltering: true,
     tableClasses: 'material',
     showPageLimitOptions: false,
-    showColumnOptions: false,
-    showExportingTool: true,
+    showColumnOptions: true,
+    showExportingTool: false,
     columns: [
-      new TableColumn({ prop: 'name', classes: 'HEY THIS IS NEW' }),
-      new TableColumn({ name: 'Gender' }),
+      new TableColumn({ name: "Name", prop: 'name', classes: 'HEY THIS IS NEW' }),
+      new TableColumn({ name: 'Gender', hide: true }),
       new TableColumn({ name: 'Company' })
     ]
   });
@@ -50,6 +50,15 @@ export class App {
     this.fetch((data) => {
       this.rows.push(...data);
     });
+
+    // setTimeout(() => {
+    //     console.log("CHANGING SOMETHING");
+    //     // this.options.columns[1].hide = true;
+
+    //     const clone = new TableColumn({ name: 'Gender', hide:true });
+        
+    //     this.options.columns[1] = clone;
+    //   }, 5000);
   }
 
   fetch(cb) {

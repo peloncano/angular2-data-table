@@ -32,9 +32,7 @@ import { Observable } from 'rxjs/Rx';
             <div *ngIf="state.options.showColumnOptions" class="dropdown column-toggle-ctrl">
                 <span class="dropdown-toggle">Columns</span>
                 <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)" class="off">Column 1</a></li>
-                <li><a href="javascript:void(0)" class="off">Column 2</a></li>
-                <li><a href="javascript:void(0)" class="on">Column 3</a></li>
+                <li *ngFor="let column of state.options.columns; let i = index;"><a href="javascript:void(0)" [class.off]="column.hide" [class.on]="!column.hide" (click)="columnOptionClick(i, column)">{{column.name}}</a></li>
                 </ul>
             </div>
         </div>
@@ -72,6 +70,7 @@ export class DataTableHeaderFilter implements OnInit {
     @Output() onDataTableLengthChange: EventEmitter<any> = new EventEmitter();
     @Output() onDataTableFilterChange: EventEmitter<any> = new EventEmitter();
     @Output() onDataTableExportToolEvent: EventEmitter<any> = new EventEmitter();
+    @Output() onColumnChange: EventEmitter<any> = new EventEmitter();
 
     constructor(public element: ElementRef, private state: StateService) {
         // element.nativeElement.classList.add('datatable-header-cell');
@@ -89,6 +88,10 @@ export class DataTableHeaderFilter implements OnInit {
         eventStream.subscribe(input =>
                 input && input.length >= this.state.options.tableFilterMinLength ?
                 this.onDataTableFilterChange.emit(input) : input);
+    }
+
+    columnOptionClick(index, column) {
+        this.onColumnChange.emit({index, column});
     }
 
     exportingToolClicked(event, type) {
