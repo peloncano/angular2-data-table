@@ -26,13 +26,6 @@ var DataTableBodyCell = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBodyCell.prototype, "width", {
-        get: function () {
-            return this.column.width + 'px';
-        },
-        enumerable: true,
-        configurable: true
-    });
     __decorate([
         core_1.Input(), 
         __metadata('design:type', TableColumn_1.TableColumn)
@@ -41,10 +34,6 @@ var DataTableBodyCell = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], DataTableBodyCell.prototype, "row", void 0);
-    __decorate([
-        core_1.HostBinding('style.width'), 
-        __metadata('design:type', Object)
-    ], DataTableBodyCell.prototype, "width", null);
     DataTableBodyCell = __decorate([
         core_1.Component({
             selector: 'td[datatable-body-cell]',

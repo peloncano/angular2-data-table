@@ -60,6 +60,25 @@ var TableOptions = (function () {
         this.tableFilterMinLength = 3;
         // column options
         this.showColumnOptions = true;
+        // column options
+        this.showExportingTool = true;
+        this.exportingTools = [
+            {
+                type: 'csv',
+                label: 'CSV',
+                class: 'button_csv'
+            },
+            {
+                type: 'print',
+                label: 'Print',
+                class: 'button_print'
+            },
+            {
+                type: 'copy',
+                label: 'Copy',
+                class: 'button_copy'
+            }
+        ];
         Object.assign(this, props);
     }
     return TableOptions;

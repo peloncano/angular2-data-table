@@ -31,5 +31,7 @@ export declare class TableOptions {
     tableFilterDelay: number;
     tableFilterMinLength: number;
     showColumnOptions: boolean;
+    showExportingTool: boolean;
+    exportingTools: any;
     constructor(props: any);
 }

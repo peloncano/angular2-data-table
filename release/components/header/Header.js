@@ -10,23 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var State_1 = require('../../services/State');
-var translate_1 = require('../../utils/translate');
 var DataTableHeader = (function () {
     function DataTableHeader(state, elm) {
         this.state = state;
         this.onColumnChange = new core_1.EventEmitter();
         elm.nativeElement.classList.add('datatable-header');
     }
-    Object.defineProperty(DataTableHeader.prototype, "headerWidth", {
-        get: function () {
-            if (this.state.options.scrollbarH)
-                return this.state.innerWidth + 'px';
-            return '100%';
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(DataTableHeader.prototype, "headerHeight", {
+        // get headerWidth() {
+        //   if(this.state.options.scrollbarH)
+        //     return this.state.innerWidth + 'px';
+        //   return '100%';
+        // }
         get: function () {
             var height = this.state.options.headerHeight;
             if (height !== 'auto')
@@ -36,44 +31,6 @@ var DataTableHeader = (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableHeader.prototype.columnResized = function (width, column) {
-        if (width <= column.minWidth) {
-            width = column.minWidth;
-        }
-        else if (width >= column.maxWidth) {
-            width = column.maxWidth;
-        }
-        column.width = width;
-        this.onColumnChange.emit({
-            type: 'resize',
-            value: column
-        });
-    };
-    DataTableHeader.prototype.columnReordered = function (_a) {
-        var prevIndex = _a.prevIndex, newIndex = _a.newIndex, model = _a.model;
-        this.state.options.columns.splice(prevIndex, 1);
-        this.state.options.columns.splice(newIndex, 0, model);
-        this.onColumnChange.emit({
-            type: 'reorder',
-            value: model
-        });
-    };
-    DataTableHeader.prototype.stylesByGroup = function (group) {
-        var widths = this.state.columnGroupWidths;
-        var offsetX = this.state.offsetX;
-        var styles = {
-            width: widths[group] + "px"
-        };
-        if (group === 'center') {
-            translate_1.translateXY(styles, offsetX * -1, 0);
-        }
-        else if (group === 'right') {
-            var totalDiff = widths.total - this.state.innerWidth;
-            var offset = totalDiff * -1;
-            translate_1.translateXY(styles, offset, 0);
-        }
-        return styles;
-    };
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
@@ -81,9 +38,28 @@ var DataTableHeader = (function () {
     DataTableHeader = __decorate([
         core_1.Component({
             selector: 'thead[datatable-header]',
-            template: "\n    <tr\n      [style.width]=\"state.columnGroupWidths.total + 'px'\"\n      class=\"datatable-header-inner\"\n      orderable\n      (onReorder)=\"columnReordered($event)\">\n\n      <th datatable-header-cell\n        *ngFor=\"let column of state.columnsByPin.center\"\n\n        long-press\n        (onLongPress)=\"drag = true\"\n        (onLongPressEnd)=\"drag = false\"\n        draggable\n        [dragX]=\"column.draggable && drag\"\n        [dragY]=\"false\"\n        [model]=\"column\"\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </th>\n    </tr>\n  ",
+            template: "\n    <tr\n      [style.width]=\"state.columnGroupWidths.total + 'px'\"\n      class=\"datatable-header-inner\"\n      >\n\n      <th datatable-header-cell\n        *ngFor=\"let column of state.columnsByPin.center\"\n        [model]=\"column\"\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </th>\n    </tr>\n  ",
+            // template: `
+            //   <tr
+            //     [style.width]="state.columnGroupWidths.total + 'px'"
+            //     class="datatable-header-inner"
+            //     orderable
+            //     (onReorder)="columnReordered($event)">
+            //     <th datatable-header-cell
+            //       *ngFor="let column of state.columnsByPin.center"
+            //       long-press
+            //       (onLongPress)="drag = true"
+            //       (onLongPressEnd)="drag = false"
+            //       draggable
+            //       [dragX]="column.draggable && drag"
+            //       [dragY]="false"
+            //       [model]="column"
+            //       (onColumnChange)="onColumnChange.emit($event)">
+            //     </th>
+            //   </tr>
+            // `,
             host: {
-                '[style.width]': 'headerWidth',
+                // '[style.width]': 'headerWidth',
                 '[style.height]': 'headerHeight'
             }
         }), 

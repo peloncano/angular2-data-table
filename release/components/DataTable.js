@@ -12,8 +12,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var core_1 = require('@angular/core');
-var math_1 = require('../utils/math');
-var ColumnMode_1 = require('../enums/ColumnMode');
 var TableOptions_1 = require('../models/TableOptions');
 var TableColumn_1 = require('../models/TableColumn');
 var DataTableColumn_1 = require('./DataTableColumn');
@@ -28,6 +26,7 @@ var DataTable = (function () {
         this.onColumnChange = new core_1.EventEmitter();
         this.onDataTableLengthChange = new core_1.EventEmitter();
         this.onDataTableFilterChange = new core_1.EventEmitter();
+        this.onDataTableExportToolEvent = new core_1.EventEmitter();
         this.element = element.nativeElement;
         this.element.classList.add('datatable');
         this.rowDiffer = differs.find({}).create(null);
@@ -110,12 +109,11 @@ var DataTable = (function () {
         if (this.options.scrollbarV) {
             width = width - this.state.scrollbarWidth;
         }
-        if (this.options.columnMode === ColumnMode_1.ColumnMode.force) {
-            math_1.forceFillColumnWidths(this.options.columns, width, forceIdx);
-        }
-        else if (this.options.columnMode === ColumnMode_1.ColumnMode.flex) {
-            math_1.adjustColumnWidths(this.options.columns, width);
-        }
+        // if (this.options.columnMode === ColumnMode.force) {
+        //   forceFillColumnWidths(this.options.columns, width, forceIdx);
+        // } else if (this.options.columnMode === ColumnMode.flex) {
+        //   adjustColumnWidths(this.options.columns, width);
+        // }
     };
     DataTable.prototype.onRowSelect = function (event) {
         this.state.setSelected(event);
@@ -124,46 +122,13 @@ var DataTable = (function () {
     DataTable.prototype.showHeadFilter = function () {
         return this.options.showPageLimitOptions || this.options.showFiltering || this.options.showColumnOptions;
     };
+    DataTable.prototype.showHideColumn = function (event) {
+        this.options.columns[event.index].hide = event.column.hide ? false : true;
+        this.onColumnChange.emit(event);
+    };
     DataTable.prototype.resize = function () {
         this.adjustSizes();
     };
-    Object.defineProperty(DataTable.prototype, "isFixedHeader", {
-        get: function () {
-            var headerHeight = this.options.headerHeight;
-            return (typeof headerHeight === 'string') ? headerHeight !== 'auto' : true;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTable.prototype, "isFixedRow", {
-        get: function () {
-            var rowHeight = this.options.rowHeight;
-            return (typeof rowHeight === 'string') ? rowHeight !== 'auto' : true;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTable.prototype, "isVertScroll", {
-        get: function () {
-            return this.options.scrollbarV;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTable.prototype, "isHorScroll", {
-        get: function () {
-            return this.options.scrollbarH;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DataTable.prototype, "isSelectable", {
-        get: function () {
-            return this.options.selectionType !== undefined;
-        },
-        enumerable: true,
-        configurable: true
-    });
     __decorate([
         core_1.Input(), 
         __metadata('design:type', TableOptions_1.TableOptions)
@@ -205,6 +170,10 @@ var DataTable = (function () {
         __metadata('design:type', core_1.EventEmitter)
     ], DataTable.prototype, "onDataTableFilterChange", void 0);
     __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], DataTable.prototype, "onDataTableExportToolEvent", void 0);
+    __decorate([
         core_1.ContentChildren(DataTableColumn_1.DataTableColumn), 
         __metadata('design:type', core_1.QueryList)
     ], DataTable.prototype, "columns", void 0);
@@ -214,31 +183,11 @@ var DataTable = (function () {
         __metadata('design:paramtypes', []), 
         __metadata('design:returntype', void 0)
     ], DataTable.prototype, "resize", null);
-    __decorate([
-        core_1.HostBinding('class.fixed-header'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isFixedHeader", null);
-    __decorate([
-        core_1.HostBinding('class.fixed-row'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isFixedRow", null);
-    __decorate([
-        core_1.HostBinding('class.scroll-vertical'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isVertScroll", null);
-    __decorate([
-        core_1.HostBinding('class.scroll-horz'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isHorScroll", null);
-    __decorate([
-        core_1.HostBinding('class.selectable'), 
-        __metadata('design:type', Object)
-    ], DataTable.prototype, "isSelectable", null);
     DataTable = __decorate([
         core_1.Component({
             selector: 'datatable',
             providers: [State_1.StateService],
-            template: "\n\n    <div *ngIf=\"showHeadFilter()\" datatable-header-filter \n      (onDataTableLengthChange)=\"onDataTableLengthChange.emit($event)\"\n      (onDataTableFilterChange)=\"onDataTableFilterChange.emit($event)\"\n      ></div>\n\n    <table [className]=\"options.tableClasses\">\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </table>\n  "
+            template: "\n\n    <div *ngIf=\"showHeadFilter()\" datatable-header-filter \n      (onDataTableLengthChange)=\"onDataTableLengthChange.emit($event)\"\n      (onDataTableFilterChange)=\"onDataTableFilterChange.emit($event)\"\n      (onDataTableExportToolEvent)=\"onDataTableExportToolEvent.emit($event)\"\n      (onColumnChange)=\"showHideColumn($event)\"\n      ></div>\n\n    <table [className]=\"options.tableClasses\">\n      <thead datatable-header\n        (onColumnChange)=\"onColumnChange.emit($event)\">\n      </thead>\n\n      <tbody datatable-body\n        (onRowClick)=\"onRowClick.emit($event)\"\n        (onRowSelect)=\"onRowSelect($event)\">\n      </tbody>\n      \n      <datatable-footer\n        (onPageChange)=\"state.setPage($event)\">\n      </datatable-footer>\n    </table>\n  "
         }),
         __param(0, core_1.Host()), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef, core_1.KeyValueDiffers])

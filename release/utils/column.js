@@ -12,6 +12,9 @@ function columnsByPin(cols) {
     if (cols) {
         for (var _i = 0, cols_1 = cols; _i < cols_1.length; _i++) {
             var col = cols_1[_i];
+            if (col.hide) {
+                continue;
+            }
             if (col.frozenLeft) {
                 ret.left.push(col);
             }

@@ -5,5 +5,4 @@ export declare class DataTableBodyCell {
     row: any;
     constructor(element: ElementRef);
     readonly value: any;
-    readonly width: string;
 }

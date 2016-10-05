@@ -9,13 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var keys_1 = require('../../utils/keys');
-var selection_1 = require('../../utils/selection');
+// import { Keys } from '../../utils/keys';
+// import { selectRows, selectRowsBetween } from '../../utils/selection';
 var translate_1 = require('../../utils/translate');
 var State_1 = require('../../services/State');
-var SelectionType_1 = require('../../enums/SelectionType');
-var Scroller_1 = require('../../directives/Scroller');
+// import { SelectionType } from '../../enums/SelectionType';
+// import { Scroller } from '../../directives/Scroller';
 var DataTableBody = (function () {
+    // @HostBinding('style.width')
+    // get bodyWidth() {
+    //   if (this.state.options.scrollbarH) {
+    //     return this.state.innerWidth + 'px';
+    //   } else {
+    //     return '100%';
+    //   }
+    // }
     function DataTableBody(state, element) {
         this.state = state;
         this.onRowClick = new core_1.EventEmitter();
@@ -41,40 +49,28 @@ var DataTableBody = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(DataTableBody.prototype, "bodyWidth", {
-        get: function () {
-            if (this.state.options.scrollbarH) {
-                return this.state.innerWidth + 'px';
-            }
-            else {
-                return '100%';
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
     DataTableBody.prototype.ngOnInit = function () {
         var _this = this;
         this.rows = this.state.rows.slice();
         this.sub = this.state.onPageChange.subscribe(function (action) {
             _this.updateRows();
             _this.hideIndicator();
-            if (_this.state.options.scrollbarV && action.type === 'pager-event') {
-                var offset = (_this.state.options.rowHeight * action.limit) * action.offset;
-                _this.scroller.setOffset(offset);
-            }
+            // if(this.state.options.scrollbarV && action.type === 'pager-event') {
+            //   const offset = (this.state.options.rowHeight * action.limit) * action.offset;
+            //   this.scroller.setOffset(offset);
+            // }
         });
         this.sub.add(this.state.onRowsUpdate.subscribe(function (rows) {
             _this.updateRows();
             _this.hideIndicator();
         }));
     };
-    DataTableBody.prototype.onBodyScroll = function (props) {
-        this.state.offsetY = props.scrollYPos;
-        this.state.offsetX = props.scrollXPos;
-        this.updatePage(props.direction);
-        this.updateRows();
-    };
+    // onBodyScroll(props) {
+    //   this.state.offsetY = props.scrollYPos;
+    //   this.state.offsetX = props.scrollXPos;
+    //   this.updatePage(props.direction);
+    //   this.updateRows();
+    // }
     DataTableBody.prototype.updatePage = function (direction) {
         var idxs = this.state.indexes;
         var page = idxs.first / this.state.pageSize;
@@ -124,47 +120,41 @@ var DataTableBody = (function () {
         var _this = this;
         setTimeout(function () { return _this.state.options.loadingIndicator = false; }, 500);
     };
-    DataTableBody.prototype.rowClicked = function (event, index, row) {
-        this.onRowClick.emit({ event: event, row: row });
-        this.selectRow(event, index, row);
-    };
-    DataTableBody.prototype.rowKeydown = function (event, index, row) {
-        if (event.keyCode === keys_1.Keys.return && this.selectEnabled) {
-            this.selectRow(event, index, row);
-        }
-        else if (event.keyCode === keys_1.Keys.up || event.keyCode === keys_1.Keys.down) {
-            var dom = event.keyCode === keys_1.Keys.up ?
-                event.target.previousElementSibling :
-                event.target.nextElementSibling;
-            if (dom)
-                dom.focus();
-        }
-    };
-    DataTableBody.prototype.selectRow = function (event, index, row) {
-        if (!this.selectEnabled)
-            return;
-        var multiShift = this.state.options.selectionType === SelectionType_1.SelectionType.multiShift;
-        var multiClick = this.state.options.selectionType === SelectionType_1.SelectionType.multi;
-        var selections = [];
-        if (multiShift || multiClick) {
-            if (multiShift && event.shiftKey) {
-                var selected = this.state.selected.slice();
-                selections = selection_1.selectRowsBetween(selected, this.rows, index, this.prevIndex);
-            }
-            else if (multiShift && !event.shiftKey) {
-                selections.push(row);
-            }
-            else {
-                var selected = this.state.selected.slice();
-                selections = selection_1.selectRows(selected, row);
-            }
-        }
-        else {
-            selections.push(row);
-        }
-        this.prevIndex = index;
-        this.onRowSelect.emit(selections);
-    };
+    // rowClicked(event, index, row): void {
+    //   this.onRowClick.emit({event, row});
+    //   this.selectRow(event, index, row);
+    // }
+    // rowKeydown(event, index, row) {
+    //   if (event.keyCode === Keys.return && this.selectEnabled) {
+    //     this.selectRow(event, index, row);
+    //   } else if (event.keyCode === Keys.up || event.keyCode === Keys.down) {
+    //     const dom = event.keyCode === Keys.up ?
+    //       event.target.previousElementSibling :
+    //       event.target.nextElementSibling;
+    //     if (dom) dom.focus();
+    //   }
+    // }
+    // selectRow(event, index, row) {
+    //   if (!this.selectEnabled) return;
+    //   const multiShift = this.state.options.selectionType === SelectionType.multiShift;
+    //   const multiClick = this.state.options.selectionType === SelectionType.multi;
+    //   let selections = [];
+    //   if (multiShift || multiClick) {
+    //     if (multiShift && event.shiftKey) {
+    //       const selected = [...this.state.selected];
+    //       selections = selectRowsBetween(selected, this.rows, index, this.prevIndex);
+    //     } else if (multiShift && !event.shiftKey) {
+    //       selections.push(row);
+    //     } else {
+    //       const selected = [...this.state.selected];
+    //       selections = selectRows(selected, row);
+    //     }
+    //   } else {
+    //     selections.push(row);
+    //   }
+    //   this.prevIndex = index;
+    //   this.onRowSelect.emit(selections);
+    // }
     DataTableBody.prototype.ngOnDestroy = function () {
         if (this.sub) {
             this.sub.unsubscribe();
@@ -179,21 +169,13 @@ var DataTableBody = (function () {
         __metadata('design:type', core_1.EventEmitter)
     ], DataTableBody.prototype, "onRowSelect", void 0);
     __decorate([
-        core_1.ViewChild(Scroller_1.Scroller), 
-        __metadata('design:type', Scroller_1.Scroller)
-    ], DataTableBody.prototype, "scroller", void 0);
-    __decorate([
         core_1.HostBinding('style.height'), 
         __metadata('design:type', Object)
     ], DataTableBody.prototype, "bodyHeight", null);
-    __decorate([
-        core_1.HostBinding('style.width'), 
-        __metadata('design:type', Object)
-    ], DataTableBody.prototype, "bodyWidth", null);
     DataTableBody = __decorate([
         core_1.Component({
             selector: 'tbody[datatable-body]',
-            template: "\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n\n      <tr datatable-body-row\n        [ngStyle]=\"getRowsStyles(row)\"\n        [style.height]=\"state.options.rowHeight + 'px'\"\n        *ngFor=\"let row of rows; let i = index;\"\n        [attr.tabindex]=\"i\"\n        (click)=\"rowClicked($event, i, row)\"\n        (keydown)=\"rowKeydown($event, i, row)\"\n        [row]=\"row\"\n        [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n        [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n      </tr>\n\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n  "
+            template: "\n      <datatable-progress\n        *ngIf=\"state.options.loadingIndicator\">\n      </datatable-progress>\n\n      <tr datatable-body-row\n        [ngStyle]=\"getRowsStyles(row)\"\n        [style.height]=\"state.options.rowHeight + 'px'\"\n        *ngFor=\"let row of rows; let i = index;\"\n        [attr.tabindex]=\"i\"\n        [row]=\"row\"\n        [class.datatable-row-even]=\"row.$$index % 2 === 0\"\n        [class.datatable-row-odd]=\"row.$$index % 2 !== 0\">\n      </tr>\n\n      <div\n        class=\"empty-row\"\n        *ngIf=\"!rows.length\"\n        [innerHTML]=\"state.options.emptyMessage\">\n      </div>\n  "
         }), 
         __metadata('design:paramtypes', [State_1.StateService, core_1.ElementRef])
     ], DataTableBody);

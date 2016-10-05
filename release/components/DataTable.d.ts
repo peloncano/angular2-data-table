@@ -14,6 +14,7 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     onColumnChange: EventEmitter<any>;
     onDataTableLengthChange: EventEmitter<any>;
     onDataTableFilterChange: EventEmitter<any>;
+    onDataTableExportToolEvent: EventEmitter<any>;
     columns: QueryList<DataTableColumn>;
     private element;
     private rowDiffer;
@@ -29,10 +30,6 @@ export declare class DataTable implements OnInit, DoCheck, AfterViewInit {
     adjustColumns(forceIdx?: number): void;
     onRowSelect(event: any): void;
     showHeadFilter(): boolean;
+    showHideColumn(event: any): void;
     resize(): void;
-    readonly isFixedHeader: boolean;
-    readonly isFixedRow: boolean;
-    readonly isVertScroll: boolean;
-    readonly isHorScroll: boolean;
-    readonly isSelectable: boolean;
 }
