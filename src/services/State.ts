@@ -128,7 +128,12 @@ export class StateService {
         this.options.sorts.splice(0, this.options.sorts.length);
       }
 
-      this.options.sorts.push(new Sort({dir, prop: column.prop}));
+      if(column.sortPropOverride) {
+        this.options.sorts.push(new Sort({dir, prop: column.sortPropOverride}));
+      } else {
+        this.options.sorts.push(new Sort({dir, prop: column.prop}));
+      }
+
     }
 
     if (!column.comparator) {

@@ -58,6 +58,9 @@ export class TableColumn {
   // If yes then the column can be sorted.
   sortable: boolean = true;
 
+  // property to sort column by
+  sortPropOverride: string = "";
+
   // can column be dragged
   draggable: boolean = true;
 
