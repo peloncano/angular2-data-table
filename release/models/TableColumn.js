@@ -34,6 +34,8 @@ var TableColumn = (function () {
         this.pipe = null;
         // If yes then the column can be sorted.
         this.sortable = true;
+        // property to sort column by
+        this.sortPropOverride = "";
         // can column be dragged
         this.draggable = true;
         // Whether the column can automatically resize to fill space in the table.

@@ -2,6 +2,8 @@
 The components' selectors and HTML on this project have been changed to use the HTML tags corresponding to a normal table (thead, tbody, th, tr, tds).
 
 Some features have been disabled as well (auto resizing)
+## Update 10/25/2016
+Made changes to allow for overriding the sorting property.
 
 ## Update 9/25/2016
 Made some changes that expose events for filtering and changing of page limits

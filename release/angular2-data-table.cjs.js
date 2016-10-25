@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v1.1.1 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v1.1.2 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -182,6 +182,8 @@ var TableColumn = (function () {
         this.pipe = null;
         // If yes then the column can be sorted.
         this.sortable = true;
+        // property to sort column by
+        this.sortPropOverride = "";
         // can column be dragged
         this.draggable = true;
         // Whether the column can automatically resize to fill space in the table.
@@ -548,7 +550,12 @@ var StateService = (function () {
             if (this.options.sortType === exports.SortType.single) {
                 this.options.sorts.splice(0, this.options.sorts.length);
             }
-            this.options.sorts.push(new Sort({ dir: dir, prop: column.prop }));
+            if (column.sortPropOverride) {
+                this.options.sorts.push(new Sort({ dir: dir, prop: column.sortPropOverride }));
+            }
+            else {
+                this.options.sorts.push(new Sort({ dir: dir, prop: column.prop }));
+            }
         }
         if (!column.comparator) {
             this.setRows(sortRows(this.rows, this.options.sorts));

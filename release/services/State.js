@@ -143,7 +143,12 @@ var StateService = (function () {
             if (this.options.sortType === SortType_1.SortType.single) {
                 this.options.sorts.splice(0, this.options.sorts.length);
             }
-            this.options.sorts.push(new Sort_1.Sort({ dir: dir, prop: column.prop }));
+            if (column.sortPropOverride) {
+                this.options.sorts.push(new Sort_1.Sort({ dir: dir, prop: column.sortPropOverride }));
+            }
+            else {
+                this.options.sorts.push(new Sort_1.Sort({ dir: dir, prop: column.prop }));
+            }
         }
         if (!column.comparator) {
             this.setRows(sort_1.sortRows(this.rows, this.options.sorts));

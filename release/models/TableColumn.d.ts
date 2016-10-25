@@ -17,6 +17,7 @@ export declare class TableColumn {
     comparator: any;
     pipe: PipeTransform;
     sortable: boolean;
+    sortPropOverride: string;
     draggable: boolean;
     canAutoResize: boolean;
     name: string;
