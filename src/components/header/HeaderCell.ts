@@ -53,7 +53,13 @@ export class DataTableHeaderCell {
 
   get sortDir() {
     let sort = this.state.options.sorts.find(s => {
-      return s.prop === this.model.prop;
+
+      if(this.model.sortPropOverride) {
+        return s.prop === this.model.sortPropOverride;
+      } else {
+        return s.prop === this.model.prop;
+      }
+      
     });
 
     if(sort) return sort.dir;

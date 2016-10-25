@@ -24,7 +24,12 @@ var DataTableHeaderCell = (function () {
         get: function () {
             var _this = this;
             var sort = this.state.options.sorts.find(function (s) {
-                return s.prop === _this.model.prop;
+                if (_this.model.sortPropOverride) {
+                    return s.prop === _this.model.sortPropOverride;
+                }
+                else {
+                    return s.prop === _this.model.prop;
+                }
             });
             if (sort)
                 return sort.dir;
