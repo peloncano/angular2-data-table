@@ -111,7 +111,13 @@ export class StateService {
 
   nextSort(column: TableColumn): void {
     const idx = this.options.sorts.findIndex(s => {
-      return s.prop === column.prop;
+
+      if(column.sortPropOverride) {
+        return s.prop === column.sortPropOverride;
+      } else {
+        return s.prop === column.prop;
+      }
+      
     });
 
     let curSort = this.options.sorts[idx];

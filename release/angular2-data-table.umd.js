@@ -530,7 +530,12 @@ var StateService = (function () {
     };
     StateService.prototype.nextSort = function (column) {
         var idx = this.options.sorts.findIndex(function (s) {
-            return s.prop === column.prop;
+            if (column.sortPropOverride) {
+                return s.prop === column.sortPropOverride;
+            }
+            else {
+                return s.prop === column.prop;
+            }
         });
         var curSort = this.options.sorts[idx];
         var curDir = undefined;
