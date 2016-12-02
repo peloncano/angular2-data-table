@@ -24,6 +24,29 @@ var DataTableHeaderFilter = (function () {
         this.onColumnChange = new core_1.EventEmitter();
         // element.nativeElement.classList.add('datatable-header-cell');
     }
+    Object.defineProperty(DataTableHeaderFilter.prototype, "columOptionsName", {
+        /**
+         *
+         *
+         * @readonly
+         *
+         * @memberOf DataTableHeaderFilter
+         */
+        get: function () {
+            var shownCounter = 0;
+            var totalCounter = this.state.columnOptions.length;
+            for (var _i = 0, _a = this.state.columnOptions; _i < _a.length; _i++) {
+                var col = _a[_i];
+                if (col.hide) {
+                    continue;
+                }
+                shownCounter++;
+            }
+            return shownCounter + " of " + totalCounter + " Columns";
+        },
+        enumerable: true,
+        configurable: true
+    });
     DataTableHeaderFilter.prototype.ngOnInit = function () {
         var _this = this;
         this.dtPagelimit = this.state.options.defaultPageLimit;
@@ -83,7 +106,7 @@ var DataTableHeaderFilter = (function () {
     DataTableHeaderFilter = __decorate([
         core_1.Component({
             selector: 'div[datatable-header-filter]',
-            template: "\n    <div class=\"filter-ctrl\">\n        <div class=\"qa-filter-left\">\n            <div *ngIf=\"state.options.showPageLimitOptions\" class=\"dataTables_length\">\n                <label>Show \n                <select \n                    [(ngModel)]='dtPagelimit'\n                    (ngModelChange)='onDataTableLengthChange.emit($event)' \n                            name=\"search-results_length\">\n                    <option \n                        *ngFor=\"let pageLimitValue of state.options.pageLimits\" \n                         [ngValue]=\"pageLimitValue\" \n                        >{{pageLimitValue}}</option>\n                    </select> entries</label>\n            </div>\n\n            <div *ngIf=\"state.options.showColumnOptions\" class=\"dropdown column-toggle-ctrl\" [class.open]=\"showOptions\">\n                <span class=\"dropdown-toggle\" (click)=\"showOptions? showOptions = false: showOptions = true\">Columns</span>\n                <ul class=\"dropdown-menu\">\n                <li *ngFor=\"let column of state.columnOptions; let i = index;\">\n                    <a href=\"javascript:void(0)\" [class.off]=\"column.hide\" \n                        [class.on]=\"!column.hide\" \n                            (click)=\"columnOptionClick(i, column)\">{{column.name}}</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"qa-filter-right\">\n            <div *ngIf=\"state.options.showFiltering\" class=\"dataTables_filter\">\n                <label>\n                    <input type=\"text\" \n                        [(ngModel)]='dtFilter'>\n                </label>\n            </div>\n            <div *ngIf=\"state.options.showExportingTool\" class=\"dropdown ng2-export-tool export-tool \">\n                <span class=\"dropdown-toggle\">Export</span>\n                <div class=\"dropdown-menu\">\n                    <a *ngFor=\"let exportingOption of state.options.exportingTools\" \n                        [className]=\"exportingOption.class\" \n                            (click)=\"exportingToolClicked($event, exportingOption.type)\" >\n                        <span>{{exportingOption.label}}</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n  ",
+            template: "\n    <div class=\"filter-ctrl\">\n        <div class=\"qa-filter-left\">\n            <div *ngIf=\"state.options.showPageLimitOptions\" class=\"dataTables_length\">\n                <label>Show \n                <select \n                    [(ngModel)]='dtPagelimit'\n                    (ngModelChange)='onDataTableLengthChange.emit($event)' \n                            name=\"search-results_length\">\n                    <option \n                        *ngFor=\"let pageLimitValue of state.options.pageLimits\" \n                         [ngValue]=\"pageLimitValue\" \n                        >{{pageLimitValue}}</option>\n                    </select> entries</label>\n            </div>\n\n            <div *ngIf=\"state.options.showColumnOptions\" class=\"dropdown column-toggle-ctrl\" [class.open]=\"showOptions\">\n                <span class=\"dropdown-toggle\" (click)=\"showOptions? showOptions = false: showOptions = true\">{{columOptionsName}}</span>\n                <ul class=\"dropdown-menu\">\n                <li *ngFor=\"let column of state.columnOptions; let i = index;\">\n                    <a href=\"javascript:void(0)\" [class.off]=\"column.hide\" \n                        [class.on]=\"!column.hide\" \n                            (click)=\"columnOptionClick(i, column)\">{{column.name}}</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"qa-filter-right\">\n            <div *ngIf=\"state.options.showFiltering\" class=\"dataTables_filter\">\n                <label>\n                    <input type=\"text\" \n                        [(ngModel)]='dtFilter'>\n                </label>\n            </div>\n            <div *ngIf=\"state.options.showExportingTool\" class=\"dropdown ng2-export-tool export-tool \">\n                <span class=\"dropdown-toggle\">Export</span>\n                <div class=\"dropdown-menu\">\n                    <a *ngFor=\"let exportingOption of state.options.exportingTools\" \n                        [className]=\"exportingOption.class\" \n                            (click)=\"exportingToolClicked($event, exportingOption.type)\" >\n                        <span>{{exportingOption.label}}</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n  ",
             host: {
                 '[className]': '\'filter-ctrl\''
             }

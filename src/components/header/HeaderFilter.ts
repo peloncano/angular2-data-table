@@ -30,7 +30,7 @@ import { Observable } from 'rxjs/Rx';
             </div>
 
             <div *ngIf="state.options.showColumnOptions" class="dropdown column-toggle-ctrl" [class.open]="showOptions">
-                <span class="dropdown-toggle" (click)="showOptions? showOptions = false: showOptions = true">Columns</span>
+                <span class="dropdown-toggle" (click)="showOptions? showOptions = false: showOptions = true">{{columOptionsName}}</span>
                 <ul class="dropdown-menu">
                 <li *ngFor="let column of state.columnOptions; let i = index;">
                     <a href="javascript:void(0)" [class.off]="column.hide" 
@@ -81,6 +81,28 @@ export class DataTableHeaderFilter implements OnInit {
 
     constructor(public element: ElementRef, private state: StateService) {
         // element.nativeElement.classList.add('datatable-header-cell');
+    }
+
+    /**
+     * 
+     * 
+     * @readonly
+     * 
+     * @memberOf DataTableHeaderFilter
+     */
+    get columOptionsName() {
+
+        let shownCounter = 0;
+        let totalCounter = this.state.columnOptions.length;
+
+        for(let col of this.state.columnOptions) {
+            if(col.hide) {
+                continue;
+            }
+            shownCounter++;
+        }
+        
+        return `${shownCounter} of ${totalCounter} Columns`;
     }
 
     ngOnInit() {
