@@ -54,6 +54,10 @@ var TableOptions = (function () {
         this.defaultPageLimit = 50;
         // filtering search
         this.showFiltering = true;
+        // filterting tooltip
+        this.showFilteringTooltip = false;
+        // fitlerting tooltip Message
+        this.filteringTooltipText = 'Searching highlighted columns';
         // filter delay in milliseconds
         this.tableFilterDelay = 300;
         // filter minimun characters

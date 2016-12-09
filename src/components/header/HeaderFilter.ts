@@ -17,14 +17,14 @@ import { Observable } from 'rxjs/Rx';
     <div class="filter-ctrl">
         <div class="qa-filter-left">
             <div *ngIf="state.options.showPageLimitOptions" class="dataTables_length">
-                <label>Show 
-                <select 
+                <label>Show
+                <select
                     [(ngModel)]='dtPagelimit'
-                    (ngModelChange)='onDataTableLengthChange.emit($event)' 
+                    (ngModelChange)='onDataTableLengthChange.emit($event)'
                             name="search-results_length">
-                    <option 
-                        *ngFor="let pageLimitValue of state.options.pageLimits" 
-                         [ngValue]="pageLimitValue" 
+                    <option
+                        *ngFor="let pageLimitValue of state.options.pageLimits"
+                         [ngValue]="pageLimitValue"
                         >{{pageLimitValue}}</option>
                     </select> entries</label>
             </div>
@@ -33,8 +33,8 @@ import { Observable } from 'rxjs/Rx';
                 <span class="dropdown-toggle" (click)="showOptions? showOptions = false: showOptions = true">{{columOptionsName}}</span>
                 <ul class="dropdown-menu">
                 <li *ngFor="let column of state.columnOptions; let i = index;">
-                    <a href="javascript:void(0)" [class.off]="column.hide" 
-                        [class.on]="!column.hide" 
+                    <a href="javascript:void(0)" [class.off]="column.hide"
+                        [class.on]="!column.hide"
                             (click)="columnOptionClick(i, column)">{{column.name}}</a>
                     </li>
                 </ul>
@@ -44,15 +44,21 @@ import { Observable } from 'rxjs/Rx';
         <div class="qa-filter-right">
             <div *ngIf="state.options.showFiltering" class="dataTables_filter">
                 <label>
-                    <input type="text" 
+                    <input type="text"
                         [(ngModel)]='dtFilter'>
                 </label>
+                <div *ngIf="state.options.showFilteringTooltip && dtFilter &&dtFilter.length >= state.options.tableFilterMinLength" class="dt_filter-help">
+                  	<span></span>
+                  	<div class="tooltip">
+                  		  {{state.options.filteringTooltipText}}
+                  	</div>
+                </div>
             </div>
             <div *ngIf="state.options.showExportingTool" class="dropdown ng2-export-tool export-tool ">
                 <span class="dropdown-toggle">Export</span>
                 <div class="dropdown-menu">
-                    <a *ngFor="let exportingOption of state.options.exportingTools" 
-                        [className]="exportingOption.class" 
+                    <a *ngFor="let exportingOption of state.options.exportingTools"
+                        [className]="exportingOption.class"
                             (click)="exportingToolClicked($event, exportingOption.type)" >
                         <span>{{exportingOption.label}}</span>
                     </a>
@@ -84,10 +90,10 @@ export class DataTableHeaderFilter implements OnInit {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @readonly
-     * 
+     *
      * @memberOf DataTableHeaderFilter
      */
     get columOptionsName() {
@@ -101,7 +107,7 @@ export class DataTableHeaderFilter implements OnInit {
             }
             shownCounter++;
         }
-        
+
         return `${shownCounter} of ${totalCounter} Columns`;
     }
 
@@ -116,7 +122,7 @@ export class DataTableHeaderFilter implements OnInit {
 
         eventStream.subscribe(input => {
 
-                // keep track if the filter input is active 
+                // keep track if the filter input is active
                 if(input && input.length >= this.state.options.tableFilterMinLength) {
                     this.isFilterActive = true;
                 }
@@ -128,7 +134,7 @@ export class DataTableHeaderFilter implements OnInit {
                     if(input === '') {
                         this.isFilterActive = false;
                     }
-                    
+
                     this.onDataTableFilterChange.emit(input);
                 }
 
@@ -145,6 +151,6 @@ export class DataTableHeaderFilter implements OnInit {
     }
 
     openColumnOptions() {
-        
+
     }
 }

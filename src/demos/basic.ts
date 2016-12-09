@@ -35,6 +35,8 @@ export class App {
     rowHeight: 'auto',
     limit: 25,
     showFiltering: true,
+    showFilteringTooltip: true,
+    filteringTooltipText: 'searching highlighted',
     tableClasses: 'material',
     showPageLimitOptions: false,
     showColumnOptions: true,
@@ -57,7 +59,7 @@ export class App {
     //     // this.options.columns[1].hide = true;
 
     //     const clone = new TableColumn({ name: 'Gender', hide:true });
-        
+
     //     this.options.columns[1] = clone;
     //   }, 5000);
   }

@@ -28,6 +28,8 @@ export declare class TableOptions {
     pageLimits: Array<number>;
     defaultPageLimit: number;
     showFiltering: boolean;
+    showFilteringTooltip: boolean;
+    filteringTooltipText: string;
     tableFilterDelay: number;
     tableFilterMinLength: number;
     showColumnOptions: boolean;

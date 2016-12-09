@@ -82,12 +82,18 @@ export class TableOptions {
   // filtering search
   showFiltering: boolean = true;
 
+  // filterting tooltip
+  showFilteringTooltip: boolean = false;
+
+  // fitlerting tooltip Message
+  filteringTooltipText: string = 'Searching highlighted columns';
+
   // filter delay in milliseconds
   tableFilterDelay: number = 300;
 
   // filter minimun characters
-  tableFilterMinLength: number = 3; 
-  
+  tableFilterMinLength: number = 3;
+
   // column options
   showColumnOptions: boolean = true;
 
