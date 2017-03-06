@@ -3,6 +3,9 @@ The components' selectors and HTML on this project have been changed to use the 
 
 Some features have been disabled as well (auto resizing)
 
+## Update 03/06/2017
+* Bug fix; column options did not work correctly when using `hideInColumnOptions`
+
 ## Update 03/03/2017
 Upgraded Angular version to 2.4.5
 

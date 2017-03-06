@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v1.1.5 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v1.2.0 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -266,11 +266,14 @@ function columnsByPin(cols) {
 function columnsOptions(cols) {
     var ret = [];
     if (cols) {
-        for (var _i = 0, cols_2 = cols; _i < cols_2.length; _i++) {
-            var col = cols_2[_i];
+        for (var i = 0; i < cols.length; i++) {
+            var col = cols[i];
             if (col.hideInColumnOptions) {
                 continue;
             }
+            // Using this to keep track of the column's index in the options array
+            // For dealing with those columns that were hidden from the column options
+            col._index = i;
             ret.push(col);
         }
     }
@@ -912,7 +915,7 @@ var DataTableHeaderFilter = (function () {
     DataTableHeaderFilter = __decorate([
         Component({
             selector: 'div[datatable-header-filter]',
-            template: "\n    <div class=\"filter-ctrl\">\n        <div class=\"qa-filter-left\">\n            <div *ngIf=\"state.options.showPageLimitOptions\" class=\"dataTables_length\">\n                <label>Show\n                <select\n                    [(ngModel)]='dtPagelimit'\n                    (ngModelChange)='onDataTableLengthChange.emit($event)'\n                            name=\"search-results_length\">\n                    <option\n                        *ngFor=\"let pageLimitValue of state.options.pageLimits\"\n                         [ngValue]=\"pageLimitValue\"\n                        >{{pageLimitValue}}</option>\n                    </select> entries</label>\n            </div>\n\n            <div *ngIf=\"state.options.showColumnOptions\" class=\"dropdown column-toggle-ctrl\" [class.open]=\"showOptions\">\n                <span class=\"dropdown-toggle\" (click)=\"showOptions? showOptions = false: showOptions = true\">{{columOptionsName}}</span>\n                <ul class=\"dropdown-menu\">\n                <li *ngFor=\"let column of state.columnOptions; let i = index;\">\n                    <a href=\"javascript:void(0)\" [class.off]=\"column.hide\"\n                        [class.on]=\"!column.hide\"\n                            (click)=\"columnOptionClick(i, column)\">{{column.name}}</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"qa-filter-right\">\n            <div *ngIf=\"state.options.showFiltering\" class=\"dataTables_filter\">\n                <label>\n                    <input type=\"text\"\n                        [(ngModel)]='dtFilter'>\n                </label>\n                <div *ngIf=\"state.options.showFilteringTooltip && dtFilter &&dtFilter.length >= state.options.tableFilterMinLength\" class=\"dt_filter-help\">\n                  \t<span></span>\n                  \t<div class=\"tooltip\">\n                  \t\t  {{state.options.filteringTooltipText}}\n                  \t</div>\n                </div>\n            </div>\n            <div *ngIf=\"state.options.showExportingTool\" class=\"dropdown ng2-export-tool export-tool \">\n                <span class=\"dropdown-toggle\">Export</span>\n                <div class=\"dropdown-menu\">\n                    <a *ngFor=\"let exportingOption of state.options.exportingTools\"\n                        [className]=\"exportingOption.class\"\n                            (click)=\"exportingToolClicked($event, exportingOption.type)\" >\n                        <span>{{exportingOption.label}}</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n  ",
+            template: "\n    <div class=\"filter-ctrl\">\n        <div class=\"qa-filter-left\">\n            <div *ngIf=\"state.options.showPageLimitOptions\" class=\"dataTables_length\">\n                <label>Show\n                <select\n                    [(ngModel)]='dtPagelimit'\n                    (ngModelChange)='onDataTableLengthChange.emit($event)'\n                            name=\"search-results_length\">\n                    <option\n                        *ngFor=\"let pageLimitValue of state.options.pageLimits\"\n                         [ngValue]=\"pageLimitValue\"\n                        >{{pageLimitValue}}</option>\n                    </select> entries</label>\n            </div>\n\n            <div *ngIf=\"state.options.showColumnOptions\" class=\"dropdown column-toggle-ctrl\" [class.open]=\"showOptions\">\n                <span class=\"dropdown-toggle\" (click)=\"showOptions? showOptions = false: showOptions = true\">{{columOptionsName}}</span>\n                <ul class=\"dropdown-menu\">\n                <li *ngFor=\"let column of state.columnOptions; let i = index;\">\n                    <a href=\"javascript:void(0)\" [class.off]=\"column.hide\"\n                        [class.on]=\"!column.hide\"\n                            (click)=\"columnOptionClick(column._index, column)\">{{column.name}}</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"qa-filter-right\">\n            <div *ngIf=\"state.options.showFiltering\" class=\"dataTables_filter\">\n                <label>\n                    <input type=\"text\"\n                        [(ngModel)]='dtFilter'>\n                </label>\n                <div *ngIf=\"state.options.showFilteringTooltip && dtFilter &&dtFilter.length >= state.options.tableFilterMinLength\" class=\"dt_filter-help\">\n                  \t<span></span>\n                  \t<div class=\"tooltip\">\n                  \t\t  {{state.options.filteringTooltipText}}\n                  \t</div>\n                </div>\n            </div>\n            <div *ngIf=\"state.options.showExportingTool\" class=\"dropdown ng2-export-tool export-tool \">\n                <span class=\"dropdown-toggle\">Export</span>\n                <div class=\"dropdown-menu\">\n                    <a *ngFor=\"let exportingOption of state.options.exportingTools\"\n                        [className]=\"exportingOption.class\"\n                            (click)=\"exportingToolClicked($event, exportingOption.type)\" >\n                        <span>{{exportingOption.label}}</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n  ",
             host: {
                 '[className]': '\'filter-ctrl\''
             }
