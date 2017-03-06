@@ -36,11 +36,14 @@ exports.columnsByPin = columnsByPin;
 function columnsOptions(cols) {
     var ret = [];
     if (cols) {
-        for (var _i = 0, cols_2 = cols; _i < cols_2.length; _i++) {
-            var col = cols_2[_i];
+        for (var i = 0; i < cols.length; i++) {
+            var col = cols[i];
             if (col.hideInColumnOptions) {
                 continue;
             }
+            // Using this to keep track of the column's index in the options array
+            // For dealing with those columns that were hidden from the column options
+            col._index = i;
             ret.push(col);
         }
     }

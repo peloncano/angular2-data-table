@@ -3,6 +3,9 @@ The components' selectors and HTML on this project have been changed to use the 
 
 Some features have been disabled as well (auto resizing)
 
+## Update 03/06/2017
+* Bug fix; column options did not work correctly when using `hideInColumnOptions`
+
 ## Update 12/09/2016
 Added table options to display tooltip on a filter input when min. number of characters are typed
 
