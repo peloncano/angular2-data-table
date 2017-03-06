@@ -35,7 +35,7 @@ import { Observable } from 'rxjs/Rx';
                 <li *ngFor="let column of state.columnOptions; let i = index;">
                     <a href="javascript:void(0)" [class.off]="column.hide"
                         [class.on]="!column.hide"
-                            (click)="columnOptionClick(i, column)">{{column.name}}</a>
+                            (click)="columnOptionClick(column._index, column)">{{column.name}}</a>
                     </li>
                 </ul>
             </div>
@@ -143,6 +143,7 @@ export class DataTableHeaderFilter implements OnInit {
     }
 
     columnOptionClick(index, column) {
+        console.log(index);
         this.onColumnChange.emit({index, column});
     }
 

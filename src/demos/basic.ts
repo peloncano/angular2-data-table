@@ -42,6 +42,7 @@ export class App {
     showColumnOptions: true,
     showExportingTool: false,
     columns: [
+      new TableColumn({ name: 'Check ALL', hideInColumnOptions: true, prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Name', prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Gender', hide: true }),
       new TableColumn({ name: 'Company' }),
