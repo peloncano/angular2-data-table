@@ -37,11 +37,17 @@ export function columnsOptions(cols) {
   let ret = [];
 
   if(cols) {
-    for(let col of cols) {
+
+    for(let i = 0; i < cols.length; i++) {
+    
+      let col = cols[i];
 
       if(col.hideInColumnOptions) {
         continue;
       }
+      // Using this to keep track of the column's index in the options array
+      // For dealing with those columns that were hidden from the column options
+      col._index = i;
       
       ret.push(col);
 
