@@ -143,7 +143,6 @@ export class DataTableHeaderFilter implements OnInit {
     }
 
     columnOptionClick(index, column) {
-        console.log(index);
         this.onColumnChange.emit({index, column});
     }
 
