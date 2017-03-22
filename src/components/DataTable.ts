@@ -171,14 +171,18 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
     // Retrieve column options; returns 'null' if it doesn't exist
     const persistedColumnOptionsString = localStorage.getItem(this.options.persistColumnOptions);
     if(persistedColumnOptionsString){
-      let persistedColumnOptions:TableColumn[] = JSON.parse(persistedColumnOptionsString);
+      // array of booleans from local storage
+      let persistedColumnOptions:boolean[] = JSON.parse(persistedColumnOptionsString);
 
       // check sizes of the one retrieved from local storage vs the table's 
       if(persistedColumnOptions.length == this.options.columns.length) {
         // loop through every column and set the hide as it was on the backed up column option
         for (var index = 0; index < this.options.columns.length; index++) {
-          this.options.columns[index].hide = persistedColumnOptions[index].hide;
+          this.options.columns[index].hide = persistedColumnOptions[index];
         }
+      } else {
+        // size don't match something is wrong; clear the local storage
+        localStorage.removeItem(this.options.persistColumnOptions);
       }
     }
 
@@ -208,8 +212,15 @@ export class DataTable implements OnInit, DoCheck, AfterViewInit {
 
     // update local storage of hidden columns
     if(this.options.persistColumnOptions) {
+
+      // array of column 'hides'
+      let allColumnsHideOption = [];
+      this.options.columns.forEach(element => {
+        allColumnsHideOption.push(element.hide);
+      });
+
       // update item on local storge every time a column changes
-      localStorage.setItem(this.options.persistColumnOptions, JSON.stringify(this.options.columns));
+      localStorage.setItem(this.options.persistColumnOptions, JSON.stringify(allColumnsHideOption));
     }
 
     this.onColumnChange.emit(event);
