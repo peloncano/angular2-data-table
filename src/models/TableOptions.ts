@@ -97,6 +97,9 @@ export class TableOptions {
   // column options
   showColumnOptions: boolean = true;
 
+  // string to persist column options for this table
+  persistColumnOptions: string = null;
+
   // column options
   showExportingTool: boolean = true;
   exportingTools: any = [

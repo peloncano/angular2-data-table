@@ -41,6 +41,7 @@ export class App {
     showPageLimitOptions: false,
     showColumnOptions: true,
     showExportingTool: false,
+    persistColumnOptions: "basic-test-table",
     columns: [
       new TableColumn({ name: 'Check ALL', hideInColumnOptions: true, prop: 'name', classes: 'HEY THIS IS NEW' }),
       new TableColumn({ name: 'Name', prop: 'name', classes: 'HEY THIS IS NEW' }),

@@ -64,6 +64,8 @@ var TableOptions = (function () {
         this.tableFilterMinLength = 3;
         // column options
         this.showColumnOptions = true;
+        // string to persist column options for this table
+        this.persistColumnOptions = null;
         // column options
         this.showExportingTool = true;
         this.exportingTools = [

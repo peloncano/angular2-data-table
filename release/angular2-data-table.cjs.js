@@ -1,5 +1,5 @@
 /**
- * angular2-data-table v1.1.5 (https://github.com/swimlane/angular2-data-table)
+ * angular2-data-table v1.1.6 (https://github.com/swimlane/angular2-data-table)
  * Copyright 2016
  * Licensed under MIT
  */
@@ -101,6 +101,8 @@ var TableOptions = (function () {
         this.tableFilterMinLength = 3;
         // column options
         this.showColumnOptions = true;
+        // string to persist column options for this table
+        this.persistColumnOptions = null;
         // column options
         this.showExportingTool = true;
         this.exportingTools = [
@@ -672,6 +674,18 @@ var DataTable = (function () {
     DataTable.prototype.adjustColumns = function (forceIdx) {
         if (!this.options.columns)
             return;
+        // Retrieve column options; returns 'null' if it doesn't exist
+        var persistedColumnOptionsString = localStorage.getItem(this.options.persistColumnOptions);
+        if (persistedColumnOptionsString) {
+            var persistedColumnOptions = JSON.parse(persistedColumnOptionsString);
+            // check sizes of the one retrieved from local storage vs the table's 
+            if (persistedColumnOptions.length == this.options.columns.length) {
+                // loop through every column and set the hide as it was on the backed up column option
+                for (var index = 0; index < this.options.columns.length; index++) {
+                    this.options.columns[index].hide = persistedColumnOptions[index].hide;
+                }
+            }
+        }
         var width = this.state.innerWidth;
         if (this.options.scrollbarV) {
             width = width - this.state.scrollbarWidth;
@@ -691,6 +705,11 @@ var DataTable = (function () {
     };
     DataTable.prototype.showHideColumn = function (event) {
         this.options.columns[event.index].hide = event.column.hide ? false : true;
+        // update local storage of hidden columns
+        if (this.options.persistColumnOptions) {
+            // update item on local storge every time a column changes
+            localStorage.setItem(this.options.persistColumnOptions, JSON.stringify(this.options.columns));
+        }
         this.onColumnChange.emit(event);
     };
     DataTable.prototype.resize = function () {

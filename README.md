@@ -3,6 +3,9 @@ The components' selectors and HTML on this project have been changed to use the 
 
 Some features have been disabled as well (auto resizing)
 
+## Update 03/21/2017
+* Added persistent support for column options. If a string is set for table option `persistColumnOptions` then the column options selected will be store in the browser's local storage
+
 ## Update 03/06/2017
 * Bug fix; column options did not work correctly when using `hideInColumnOptions`
 
